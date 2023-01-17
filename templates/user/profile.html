@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title%}
+{{ title }}
+{% endblock title %}
+
+{% block avatar%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar %}
+
+
+{% block avatar-round%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar-round %}
+
+
+{% block name%}
+{{ fullname }}
+{% endblock name %}
+
+
+{% block specialization%}
+{{ specialization }}
+{% endblock specialization %}
+
+
+
+{% block content%}
+<div class="page-header">
+    <div class="row">
+       <div class="col">
+          <h3 class="page-title">Profile</h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+             <li class="breadcrumb-item active">Profile</li>
+          </ul>
+       </div>
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-md-12">
+       <div class="profile-header" style="line-height: 30px;">
+          <div class="row align-items-center">
+             <div class="col-auto profile-image">
+                <a href="#">
+                <img class="rounded-circle" alt="User Image" src="{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}">
+                </a>
+             </div>
+             <div class="col ml-md-n2 profile-user-info">
+                <h4 class="user-name mb-0">{{ fullname }}</h4>
+                <h6 class="text-muted">{{ specialization }}</h6>
+                <div class="user-Location"><i class="fas fa-map-marker-alt"></i> {{ address }}</div>
+                <div class="about-text"><i class="fas fa-phone-alt"></i> {{ phone }}</div>
+             </div>
+             
+          </div>
+       </div>
+       <div class="profile-menu">
+          <ul class="nav nav-tabs nav-tabs-solid">
+             <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#per_details_tab">Cá Nhân</a>
+             </li>
+             <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#password_tab">Mật Khẩu</a>
+             </li>
+          </ul>
+       </div>
+       <div class="tab-content profile-tab-cont">
+          <div class="tab-pane fade active show" id="per_details_tab">
+             <div class="row">
+                <div class="col-lg-9">
+                   <div class="card">
+                      <div class="card-body">
+                         <h5 class="card-title d-flex justify-content-between">
+                            <span>Thông tin cá nhân</span>
+                            <a class="edit-link" data-toggle="modal" href="#edit_personal_details"><i class="far fa-edit mr-1"></i>Edit</a>
+                         </h5>
+                         <div class="row">
+                            <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Họ Tên</p>
+                            <p class="col-sm-9">{{ fullname }}</p>
+                         </div>
+                         <div class="row">
+                            <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Ngày Sinh</p>
+                            <p class="col-sm-9">{{ birthday }}</p>
+                         </div>
+                         <div class="row">
+                            <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Email ID</p>
+                            <p class="col-sm-9">{{ email }}</p>
+                         </div>
+                         <div class="row">
+                            <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Số Điện Thoại</p>
+                            <p class="col-sm-9">{{ phone }}</p>
+                         </div>
+                         <div class="row">
+                            <p class="col-sm-3 text-muted text-sm-right mb-0">Địa Chỉ</p>
+                            <p class="col-sm-9 mb-0">{{ address }}<br>
+                            </p>
+                         </div>
+                      </div>
+                   </div>
+                   {% if error %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            {{ error }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
+
+                    {% if success %}
+                        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                            {{ success }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-3">
+                   <div class="card">
+                      <div class="card-body">
+                         <h5 class="card-title d-flex justify-content-between">
+                            <span>Trạng Thái</span>
+                            <a class="edit-link" href="#"><i class="far fa-edit mr-1"></i> Edit</a>
+                         </h5>
+                        {% if active %}
+                            <button class="btn btn-success" type="button"><i class="fe fe-check-verified"></i> Đang Giảng Dạy</button>
+                        {% else %}
+                            <button class="btn btn-success" type="button"><i class="fe fe-check-verified"></i> Không Giảng Dạy</button>
+                        {% endif %}
+                      </div>
+                   </div>
+                   <div class="card">
+                      <div class="card-body">
+                         <h5 class="card-title d-flex justify-content-between">
+                            <span>Môn Học Phụ Trách</span>
+                            <a class="edit-link" href="#"><i class="far fa-edit mr-1"></i> Edit</a>
+                         </h5>
+                         <div class="skill-tags">
+                            {% for subject in subjects %}
+                                <span>{{ subject.name }}</span>
+                            {% endfor %}
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div id="password_tab" class="tab-pane fade">
+             <div class="card">
+                <div class="card-body">
+                   <h5 class="card-title">Đổi mật khẩu</h5>
+                   <div class="row">
+                      <div class="col-md-10 col-lg-6">
+                         <form method="POST">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                               <label>Mật khẩu cũ</label>
+                               <input type="password" name="old_pass" class="form-control" placeholder="Nhập mật khẩu cũ...">
+                            </div>
+                            <div class="form-group">
+                               <label>Mật khẩu mới</label>
+                               <input type="password" name="new_pass" class="form-control" placeholder="Nhập mật khẩu mới...">
+                            </div>
+                            <div class="form-group">
+                               <label>Xác nhận mật khẩu</label>
+                               <input type="password" name="confirm_pass" class="form-control" placeholder="Xác nhận mật khẩu mới...">
+                            </div>
+                            <button class="btn btn-primary" type="submit">Thay Đổi</button>
+                         </form>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+
+
+{% endblock content %}
+
