@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title%}
+{{ title }}
+{% endblock title %}
+
+{% block avatar%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar %}
+
+
+{% block avatar-round%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar-round %}
+
+
+{% block name%}
+{{ fullname }}
+{% endblock name %}
+
+
+{% block specialization%}
+{{ specialization }}
+{% endblock specialization %}
+
+
+
+{% block content%}
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Update Subject</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/mon-hoc/">Subject</a></li>
+                <li class="breadcrumb-item active">Update Subject</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="form-title"><span>Thông Tin Môn Học</span></h5>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Tên Môn Học</label>
+                                <input type="text" class="form-control" placeholder="Nhập vào tên môn học.."
+                                    name="subject_name" value="{{ subject.name }}">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Chuyên Ngành</label>
+                                <select name="specialization" aria-controls="DataTables_Table_0"
+                                    class="custom-select custom-select-sm form-control ">
+                                    {% for item in specialization_list %}
+                                        {% if item.pk == subject.specialization.pk %}
+                                            <option value="{{ item.pk }}" selected>{{ item.name }}</option>
+                                        {% else %}
+                                            <option value="{{ item.pk }}">{{ item.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Số Tín Chỉ</label>
+                                <select name="subject_credits" aria-controls="DataTables_Table_0"
+                                    class="custom-select custom-select-sm form-control ">
+                                    {% for index in credits %}
+                                        {% if index == subject.credits %}
+                                            <option value="{{ index }}">{{ index }} tín chỉ</option>
+                                        {% else %}
+                                            <option value="{{ index }}">{{ index }} tín chỉ</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Trạng Thái</label>
+                                <select name="subject_teaching" aria-controls="DataTables_Table_0"
+                                    class="custom-select custom-select-sm form-control ">
+                                    {% if subject.teaching %}
+                                        <option value="1" selected>Đang Phụ Trách</option>
+                                        <option value="0">Không Phụ Trách</option>
+                                    {% else %}
+                                        <option value="1">Đang Phụ Trách</option>
+                                        <option value="0" selected>Không Phụ Trách</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% if success %}
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    {{ success }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+                
+            {% if error %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ error }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

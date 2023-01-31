@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title%}
+{{ title }}
+{% endblock title %}
+
+{% block avatar%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar %}
+
+
+{% block avatar-round%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar-round %}
+
+
+{% block name%}
+{{ fullname }}
+{% endblock name %}
+
+
+{% block specialization%}
+{{ specialization }}
+{% endblock specialization %}
+
+
+
+{% block content%}
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Update Students</h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="{% url 'list_students' %}">Students</a></li>
+             <li class="breadcrumb-item active">Update Students</li>
+          </ul>
+       </div>
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-sm-12">
+       <div class="card">
+          <div class="card-body">
+             <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                   <div class="col-12">
+                      <h5 class="form-title"><span>Cập Nhật Sinh Viên</span></h5>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Họ Đệm</label>
+                         <input type="text" name="first_name" class="form-control" value="{{ first_name }}">
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Tên</label>
+                         <input type="text" name="last_name" class="form-control" value="{{ last_name }}">
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                        <label>Giới Tính</label>
+                        <select class="form-control" name="gender">
+                            {% if student.gender %}
+                                <option value="1" selected>Nam</option>
+                                <option value="0">Nữ</option>
+                            {% else %}
+                                <option value="1" >Nam</option>
+                                <option value="0" selected>Nữ</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                           <label>Năm Sinh</label>
+                           <div>
+                              <input type="date" name="birthday" class="form-control" value="{{ birthday }}">
+                           </div>
+                        </div>
+                     </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                        <label>Chuyên Ngành</label>
+                        <select class="form-control specialization" name="specialization" disabled>
+                            <option value="{{ student.specialization.pk }}" hidden>{{ student.specialization.name }}</option>
+                        </select>
+                        </div>
+                    </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Lớp Học</label>
+                         <select class="form-control classname" name="classname" disabled>
+                            <option value="{{ student.classname.pk }}" hidden>{{ student.classname.name }}</option>
+                         </select>
+                      </div>
+                   </div>
+                   
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Quê Quán</label>
+                         <input type="text" name="address" class="form-control" value="{{ student.address }}">
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Số Điện Thoại</label>
+                         <input type="text" name="phone" class="form-control" value="{{ student.phone }}">
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>Ảnh Đại Diện</label>
+                            <input type="file" name="avatar" class="form-control" accept="image/*" onchange="loadFile(event)">
+                        </div>
+                        <div class="form-group">
+                            <div class="text-left">
+                                <img src="{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ student.avatar }}" class="rounded" width="250" height="250" id="output">
+                            </div>
+                        </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                        
+                    </div>
+                   <div class="col-12 text-left">
+                      <button type="submit" name="submit" value="submit" class="btn btn-primary">Cập Nhật Sinh Viên</button>
+                   </div>
+                </div>
+             </form>
+          </div>
+         {% if success %}
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                  {{ success }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+         {% endif %}
+            
+         {% if error %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  {{ error }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+         {% endif %}
+       </div>
+    </div>
+ </div>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+ <script>
+    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+        URL.revokeObjectURL(output.src) // free memory
+        }
+    };
+  </script>
+{% endblock content %}

@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title%}
+{{ title }}
+{% endblock title %}
+
+{% block avatar%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar %}
+
+
+{% block avatar-round%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar-round %}
+
+
+{% block name%}
+{{ fullname }}
+{% endblock name %}
+
+
+{% block specialization%}
+{{ specialization }}
+{% endblock specialization %}
+
+
+
+{% block content%}
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Students</h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+             <li class="breadcrumb-item active">Students</li>
+          </ul>
+       </div>
+       <div class="col-auto text-right float-right ml-auto">
+          <a href="{% url 'export_students' %}" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Xuất Execl</a>
+          <a href="{% url 'create_students' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+       </div>
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-sm-12">
+       <div class="card card-table">
+          <div class="card-body">
+             <div class="table-responsive" style="overflow-x: hidden;">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                   <div class="row">
+                      <div class="col-sm-12 col-md-6">
+                         <div class="dataTables_length" id="DataTables_Table_0_length">
+                              {% csrf_token %}
+                              <label style="margin-right: 30px;">Chọn lớp:
+                                 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="custom-select custom-select-sm form-control " id="classname">
+                                    {% for class in classname %}
+                                       <option value="{{ class.pk }}">{{ class.name }}</option>
+                                    {% endfor %}
+                                 </select>
+                              </label>
+                              <label>Tìm kiếm:
+                                 <input type="text" class="form-control search_input" placeholder="Nhập tên sinh viên...">
+                              </label>
+                        </div>
+                     </div>
+                     <div class="col-sm-12 col-md-6"></div></div><div class="row"><div class="col-sm-12"><table class="table table-hover table-center mb-0 datatable dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                   <thead>
+                      <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="ID: activate to sort column descending" style="width: 67.1562px;">MSSV</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 196.016px;">Họ Tên</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Class: activate to sort column ascending" style="width: 56.1406px;">Lớp Học</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="DOB: activate to sort column ascending" style="width: 96.125px;">Chuyên Ngành</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Parent Name: activate to sort column ascending" style="width: 120.016px;">Ngày Sinh</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Mobile Number: activate to sort column ascending" style="width: 140.578px;">Số Điện Thoại</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending" style="width: 365.734px;">Địa Chỉ</th><th class="text-right sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 87.2344px;">Hành Động</th></tr>
+                   </thead>
+                   <tbody>
+ 
+                    {% for student in students %}
+                      <tr role="row" class="even">
+                         <td class="sorting_1">{{ student.pk }}</td>
+                         <td>
+                            <h2 class="table-avatar">
+                               <a href="student-details.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ student.avatar }}" alt="User Image"></a>
+                               <a href="student-details.html">{{ student.fullname }}</a>
+                            </h2>
+                         </td>
+                         <td>{{ student.classname }}</td>
+                         <td>{{ student.specialization }}</td>
+                         <td>{{ student.birthday }}</td>
+                         <td>{{ student.phone }}</td>
+                         <td>{{ student.address }}</td>
+                         <td class="text-right">
+                            <div class="actions">
+                               <a href="{% url 'update_students' pk=student.pk %}" class="btn btn-sm bg-success-light mr-2">
+                               <i class="fas fa-pen"></i>
+                               </a>
+                               <a href="#myModal" data-toggle="modal" value="{{ student.pk }}" class="btn btn-sm bg-danger-light delete_students ">
+                               <i class="fas fa-trash"></i>
+                               </a>
+                            </div>
+                         </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                </table></div></div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+   <div class="modal-dialog modal-confirm">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h4 class="modal-title">Thông Báo</h4>
+         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+       </div>
+       <div class="modal-body text-left">
+         <p>Bạn thực sự muốn xóa sinh viên này?</p>
+       </div>
+       <div class="modal-footer ">
+         <button type="button" class="btn btn-info" data-dismiss="modal">Hủy</button>
+         <a href="#" class="btn btn-danger delete_confirm text-white">Xóa</a>
+       </div>
+     </div>
+   </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>   
+   const BASE_URL = window.location
+
+   const host = "{{ request.get_host }}"
+
+   const media = 'http://' + host + '/media/'
+
+   $(document).ready(function() {
+   
+      $('select').on('change', function() {
+         var classnamepk = this.value
+         var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+         $.post(BASE_URL, {classnamepk: classnamepk, csrfmiddlewaretoken: csrfmiddlewaretoken}, function(res){
+            $('tbody').empty()
+            var data = res.data
+            
+            for(var i = 0; i < data.length; i++){
+               var update_url = BASE_URL + 'sua/' + data[i].pk
+               $('tbody').append('<tr role="row" class="even"> <td class="sorting_1">'+data[i].pk+'</td> <td> <h2 class="table-avatar"> <a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="'+ media + data[i].avatar+'" alt="User Image"></a> <a href="student-details.html">'+ data[i].fullname +'</a> </h2> </td> <td>'+ data[i].classname__name +'</td> <td>'+ data[i].specialization__name +'</td> <td>'+ data[i].birthday +'</td> <td>'+ data[i].phone +'</td> <td>'+ data[i].address +'</td> <td class="text-right"> <div class="actions"> <a href="'+update_url+'" class="btn btn-sm bg-success-light mr-2"> <i class="fas fa-pen"></i> </a> <a href="#myModal" data-toggle="modal" value="'+data[i].pk+'" class="btn btn-sm bg-danger-light delete_students "><i class="fas fa-trash"></i> </a> </div> </td> </tr>')
+            }
+
+            $('.delete_students').click(function(event){
+               var pk = $(this).attr('value')
+               
+               var delete_url = BASE_URL + 'xoa/' + pk
+               $('.delete_confirm').attr('href', delete_url)
+            })
+
+         })
+      })
+
+   $('.delete_students').click(function(event){
+         var pk = $(this).attr('value')
+         
+         var delete_url = BASE_URL + 'xoa/' + pk
+         $('.delete_confirm').attr('href', delete_url)
+      })
+   });
+
+
+   $(".search_input").keyup(function(){
+      var search = $(this).val()
+      var classnamepk = this.value
+      var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val()
+      $.post(BASE_URL,{classnamepk: classnamepk, search: search, csrfmiddlewaretoken: csrfmiddlewaretoken}, function(res){
+         $('tbody').empty()
+         var data = res.data
+         
+         for(var i = 0; i < data.length; i++){
+            var update_url = BASE_URL + 'sua/' + data[i].pk
+            $('tbody').append('<tr role="row" class="even"> <td class="sorting_1">'+data[i].pk+'</td> <td> <h2 class="table-avatar"> <a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="'+ media + data[i].avatar+'" alt="User Image"></a> <a href="student-details.html">'+ data[i].fullname +'</a> </h2> </td> <td>'+ data[i].classname__name +'</td> <td>'+ data[i].specialization__name +'</td> <td>'+ data[i].birthday +'</td> <td>'+ data[i].phone +'</td> <td>'+ data[i].address +'</td> <td class="text-right"> <div class="actions"> <a href="'+update_url+'" class="btn btn-sm bg-success-light mr-2"> <i class="fas fa-pen"></i> </a> <a href="#myModal" data-toggle="modal" value="'+data[i].pk+'" class="btn btn-sm bg-danger-light delete_students "><i class="fas fa-trash"></i> </a> </div> </td> </tr>')
+         }
+
+         $('.delete_students').click(function(event){
+            var pk = $(this).attr('value')
+            
+            var delete_url = BASE_URL + 'xoa/' + pk
+            $('.delete_confirm').attr('href', delete_url)
+         })
+      })   
+   });
+</script> 
+
+
+ 
+{% endblock content %}

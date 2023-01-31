@@ -12,6 +12,7 @@
       <link rel="stylesheet" href="{% static 'plugins/fontawesome/css/fontawesome.min.css' %}">
       <link rel="stylesheet" href="{% static 'plugins/fontawesome/css/all.min.css' %}">
       <link rel="stylesheet" href="{% static 'css/style.css' %}">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
    </head>
    <body>
       <div class="main-wrapper">
@@ -60,31 +61,14 @@
                      <li class="menu-title">
                         <span>Main Menu</span>
                      </li>
-                     <li class="submenu active">
-                        <a href="#"><i class="fas fa-user-graduate"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                           <li><a href="index.html" class="active">Admin Dashboard</a></li>
-                           <li><a href="teacher-dashboard.html">Teacher Dashboard</a></li>
-                           <li><a href="student-dashboard.html">Student Dashboard</a></li>
-                        </ul>
+                     <li>
+                        <a href="{% url 'home' %}"><i class="fas fa-holly-berry"></i> <span> Dashboard</span></a>
                      </li>
-                     <li class="submenu">
-                        <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                           <li><a href="students.html">Student List</a></li>
-                           <li><a href="student-details.html">Student View</a></li>
-                           <li><a href="add-student.html">Student Add</a></li>
-                           <li><a href="edit-student.html">Student Edit</a></li>
-                        </ul>
+                     <li class="">
+                        <a href="{% url 'list_students' %}"><i class="fas fa-user-graduate"></i> <span> Sinh Viên</span> </a>
                      </li>
-                     <li class="submenu">
-                        <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Teachers</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                           <li><a href="teachers.html">Teacher List</a></li>
-                           <li><a href="teacher-details.html">Teacher View</a></li>
-                           <li><a href="add-teacher.html">Teacher Add</a></li>
-                           <li><a href="edit-teacher.html">Teacher Edit</a></li>
-                        </ul>
+                     <li>
+                        <a href="{% url 'list_subjects' %}"><i class="fas fa-book-reader"></i> <span> Môn Học</span></a>
                      </li>
                      <li class="submenu">
                         <a href="#"><i class="fas fa-building"></i> <span> Departments</span> <span class="menu-arrow"></span></a>

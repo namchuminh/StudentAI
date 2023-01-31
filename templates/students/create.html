@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title%}
+{{ title }}
+{% endblock title %}
+
+{% block avatar%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar %}
+
+
+{% block avatar-round%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar-round %}
+
+
+{% block name%}
+{{ fullname }}
+{% endblock name %}
+
+
+{% block specialization%}
+{{ specialization }}
+{% endblock specialization %}
+
+
+
+{% block content%}
+<div class="page-header">
+    <div class="row align-items-center">
+       <div class="col">
+          <h3 class="page-title">Add Students</h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="{% url 'list_students' %}">Students</a></li>
+             <li class="breadcrumb-item active">Add Students</li>
+          </ul>
+       </div>
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-sm-12">
+       <div class="card">
+          <div class="card-body">
+             <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                   <div class="col-12">
+                      <h5 class="form-title"><span>Thông Tin Sinh Viên</span></h5>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Họ Đệm</label>
+                         <input type="text" name="first_name" class="form-control">
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Tên</label>
+                         <input type="text" name="last_name" class="form-control">
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                        <label>Giới Tính</label>
+                        <select class="form-control" name="gender">
+                            <option value="1" selected>Nam</option>
+                            <option value="0">Nữ</option>
+                        </select>
+                    </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                           <label>Năm Sinh</label>
+                           <div>
+                              <input type="date" name="birthday" class="form-control">
+                           </div>
+                        </div>
+                     </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                        <label>Chuyên Ngành</label>
+                        <select class="form-control specialization" name="specialization">
+                            <option value="" hidden>--Chọn--</option>
+                            {% for item in specialization_all %}
+                                <option value="{{ item.pk }}">{{ item.name }}</option>
+                            {% endfor %}
+                        </select>
+                        </div>
+                    </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Lớp Học</label>
+                         <select class="form-control classname" name="classname">
+                            <option value="" >Chọn chuyên ngành</option>
+                         </select>
+                      </div>
+                   </div>
+                   
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Quê Quán</label>
+                         <input type="text" name="address" class="form-control">
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Số Điện Thoại</label>
+                         <input type="text" name="phone" class="form-control">
+                      </div>
+                   </div>
+                   <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                         <label>Ảnh Đại Diện</label>
+                         <input type="file" name="avatar" class="form-control">
+                      </div>
+                   </div>
+                   <div class="col-12">
+                      <button type="submit" name="submit" value="submit" class="btn btn-primary">Thêm Sinh Viên</button>
+                   </div>
+                </div>
+             </form>
+          </div>
+         {% if success %}
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                  {{ success }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+         {% endif %}
+            
+         {% if error %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  {{ error }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+         {% endif %}
+       </div>
+    </div>
+ </div>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+ <script>   
+    $(document).ready(function() {
+       const BASE_URL = window.location
+ 
+       const host = "{{ request.get_host }}"
+ 
+       const media = 'http://' + host + '/media/'
+ 
+       $('.specialization').on('change', function() {
+            var specializationpk = this.value
+            var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+            $.post(BASE_URL, {specializationpk: specializationpk, csrfmiddlewaretoken: csrfmiddlewaretoken}, function(res){
+                var data = res.data
+                $('.classname').empty()
+                $('.classname').append('<option value="" hidden>--Chọn Lớp--</option>')
+                for(var i = 0; i < data.length; i++){
+                    $('.classname').append('<option value="'+ data[i].pk +'" >'+ data[i].name +'</option>')
+                }
+            })
+       });
+    });
+ </script>
+{% endblock content %}

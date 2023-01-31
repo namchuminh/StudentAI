@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title%}
+{{ title }}
+{% endblock title %}
+
+{% block avatar%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar %}
+
+
+{% block avatar-round%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar-round %}
+
+
+{% block name%}
+{{ fullname }}
+{% endblock name %}
+
+
+{% block specialization%}
+{{ specialization }}
+{% endblock specialization %}
+
+
+
+{% block content%}
+<div class="page-header">
+   <div class="row align-items-center">
+      <div class="col">
+         <h3 class="page-title">Subjects</h3>
+         <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item active">Subjects</li>
+         </ul>
+      </div>
+      <div class="col-auto text-right float-right ml-auto">
+         <a href="{% url 'create_subjects' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+      </div>
+   </div>
+</div>
+<div class="row">
+   <div class="col-sm-12">
+      <div class="card card-table">
+         <div class="card-body">
+            <div class="table-responsive" style="overflow-x: hidden;">
+               <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                  <div class="row">
+                     <div class="col-sm-12 col-md-6">
+                        
+                     </div>
+                     <div class="col-sm-12 col-md-6"></div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <table class="table table-hover table-center mb-0 datatable dataTable no-footer"
+                           id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                           <thead>
+                              <tr role="row">
+                                 <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                    colspan="1" aria-sort="ascending"
+                                    aria-label="ID: activate to sort column descending" style="width: 325.766px;">STT
+                                 </th>
+                                 <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                    colspan="1" aria-label="Name: activate to sort column ascending"
+                                    style="width: 373.406px;">Tên Môn Học</th>
+                                 <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                    colspan="1" aria-label="Class: activate to sort column ascending"
+                                    style="width: 264.75px;">Số Tín Chỉ</th>
+                                 <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending"
+                                    style="width: 350.078px;">Trạng Thái</th>
+                                 <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending"
+                                    style="width: 350.078px;">Chuyên Ngành</th>
+                                 <th class="text-right sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending"
+                                    style="width: 350.078px;">Hành Động</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              
+                              {% for item in subjects %}
+                                 <tr role="row" class="odd">
+                                    <td class="sorting_1">{{ item.pk }}</td>
+                                    <td>
+                                       <h2>
+                                          <a>{{ item.name }}</a>
+                                       </h2>
+                                    </td>
+                                    <td>{{ item.credits }}</td>
+                                    <td>
+                                       {% if item.teaching %}
+                                          <a href="#" class="btn btn-success">Đang Phụ Trách</a>  
+                                       {% else %}
+                                          <a href="#" class="btn btn-warning">Không Phụ Trách</a>  
+                                       {% endif %}
+                                    </td>
+                                    <td>
+                                       {{ item.specialization.name }}
+                                    </td>
+                                    <td class="text-right">
+                                       <div class="actions">
+                                          <a href="{% url 'update_subjects' pk=item.pk %}" class="btn btn-sm bg-success-light mr-2">
+                                             <i class="fas fa-pen"></i>
+                                          </a>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              {% endfor %}
+                              
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock content %}

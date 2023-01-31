@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .models import InfoUser, Subject
+from .models import InfoUser
+from subjects.models import Subject
 # Create your views here.
 
 class Login(View):
@@ -128,6 +129,7 @@ class Profile(View):
                 user.save()
                 data['success'] = "Thay đổi mật khẩu thành công!"
                 return render(request,self.template_name,data)
-            
+
+
             
             
