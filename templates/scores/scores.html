@@ -39,7 +39,7 @@
         <div class="col-auto text-right float-right ml-auto">
             <a href="/sinh-vien/xuat/" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Xuất
                 Execl</a>
-            <a href="/sinh-vien/them/" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+            <a href="{% url 'add_scores_subject' slug_subject=slug_subject slug_class=slug_class %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
         </div>
     </div>
 </div>
@@ -80,15 +80,15 @@
                                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Parent Name: activate to sort column ascending"
-                                                style="width: 140.578px;">Điểm Số 1</th>
+                                                style="width: 40.578px;">Điểm Số 1</th>
                                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Mobile Number: activate to sort column ascending"
-                                                style="width: 140.578px;">Điểm Số 2</th>
+                                                style="width: 40.578px;">Điểm Số 2</th>
                                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Address: activate to sort column ascending"
-                                                style="width: 140.578px;">Điểm Kết Thúc</th>
+                                                style="width: 40.578px;">Điểm Kết Thúc</th>
                                             <th class="text-right sorting" tabindex="0"
                                                 aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                                 aria-label="Action: activate to sort column ascending"
@@ -120,7 +120,8 @@
                                                         </a>
                                                     </div>
                                                     <div class="actions done" style="display: none;">
-                                                        <a href="#" class="btn btn-sm bg-success-light mr-2 done_score">
+                                                        {% csrf_token %}
+                                                        <a href="#" value="{{ item.pk }}" class="btn btn-sm bg-success-light mr-2 done_score">
                                                             <span>Xong</span>
                                                         </a>
                                                     </div>
@@ -144,8 +145,6 @@
     
        const media = 'http://' + host + '/media/'
 
-       var CHANGE = false
-
        $(document).ready(function() {
             var score1 = $('.score1').text()
             var score2 = $('.score2').text()
@@ -154,13 +153,13 @@
             $('.edit_score').click(function(event){
 
                 $('.score1').empty()
-                $('.score1').append('<input type="text" class="s1" style="border: none; width: 40%;" value="'+score1+'">')
+                $('.score1').append('<input type="text" class="s1" style="border: none; " value="'+score1+'">')
 
                 $('.score2').empty()
-                $('.score2').append('<input type="text" class="s2" style="border: none; width: 40%;" value="'+score2+'">')
+                $('.score2').append('<input type="text" class="s2" style="border: none; " value="'+score2+'">')
 
                 $('.score3').empty()
-                $('.score3').append('<input type="text" class="s3" style="border: none; width: 40%;" value="'+score3+'">')
+                $('.score3').append('<input type="text" class="s3" style="border: none; " value="'+score3+'">')
                 
                 $('.edit').css("display", "none");
                 $('.done').css("display", "unset");
@@ -171,7 +170,10 @@
                 var s1 = $('.s1').val()
                 var s2 = $('.s2').val()
                 var s3 = $('.s3').val()
-                
+
+                var pk = $(this).attr('value')
+                var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+
                 if (s1 == "" || s2 == "" || s3 == ""){
                     alert("Vui lòng không bỏ trống điểm!")
                     return
@@ -187,14 +189,30 @@
                     score3 = s3
                 }
 
-                $('.score1').empty()
-                $('.score1').append(score1)
+                $.post(BASE_URL, { pk: pk, score1: score1, score2: score2, score3: score3, csrfmiddlewaretoken: csrfmiddlewaretoken}, function(res){
 
-                $('.score2').empty()
-                $('.score2').append(score2)
+                    if(res.data == true){
+                        $('.score1').empty()
+                        $('.score1').append(score1)
 
-                $('.score3').empty()
-                $('.score3').append(score3)
+                        $('.score2').empty()
+                        $('.score2').append(score2)
+
+                        $('.score3').empty()
+                        $('.score3').append(score3)
+                    }else{
+                        alert("Điểm không hợp lệ, vui lòng nhập lại!")
+                        $('.score1').empty()
+                        $('.score1').append(score1)
+
+                        $('.score2').empty()
+                        $('.score2').append(score2)
+
+                        $('.score3').empty()
+                        $('.score3').append(score3)
+                    }
+
+                })
 
                 $('.edit').css("display", "unset");
                 $('.done').css("display", "none");
