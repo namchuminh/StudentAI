@@ -9,4 +9,5 @@ urlpatterns = [
     path('', include('user.urls')),
     path('sinh-vien/', include('students.urls')),
     path('mon-hoc/', include('subjects.urls')),
+    path('diem-so/', include('scores.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -55,6 +55,7 @@
                               {% csrf_token %}
                               <label style="margin-right: 30px;">Chọn lớp:
                                  <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="custom-select custom-select-sm form-control " id="classname">
+                                    <option value="" hidden>--Chọn--</option>
                                     {% for class in classname %}
                                        <option value="{{ class.pk }}">{{ class.name }}</option>
                                     {% endfor %}

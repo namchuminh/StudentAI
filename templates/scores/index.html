@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title%}
+{{ title }}
+{% endblock title %}
+
+{% block avatar%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar %}
+
+
+{% block avatar-round%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar-round %}
+
+
+{% block name%}
+{{ fullname }}
+{% endblock name %}
+
+
+{% block specialization%}
+{{ specialization }}
+{% endblock specialization %}
+
+
+
+{% block content%}
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Scores</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                <li class="breadcrumb-item active">Scores</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-table">
+            <div class="card-body">
+                <div class="table-responsive" style="overflow-x: hidden;">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                {% csrf_token %}
+                                <label style="margin-right: 30px;">Chọn Khoa:</label>
+                                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                                    class="custom-select custom-select-sm form-control " id="classname">
+                                    <option value="" hidden>--Chọn--</option>
+                                    {% for item in specialization_list %}
+                                        <option value="{{ item.pk }}">{{ item.name }}</option>
+                                    {% endfor %}
+                                    
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row list_subjects">
+                            {% for item in subjects %}
+                                <div class="col-sm-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title mb-0">{{ item.name }}</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul>
+                                                <li>Tín chỉ: {{ item.credits }} tín chỉ</li>
+                                                <hr>
+                                                <li>Trạng thái: 
+                                                    {% if item.teaching %}
+                                                        Đang giảng dạy
+                                                    {% else %}
+                                                        Không giảng dạy
+                                                    {% endif %}
+                                                </li>
+                                                <hr>
+                                                <li>
+                                                    Khoa: {{ item.specialization }}
+                                                </li>
+                                                <hr>
+                                            </ul>
+                                            <a class="btn btn-primary" href="{% url 'class_subject' slug=item.slug %}">Quản Lý Điểm</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>   
+   const BASE_URL = window.location
+
+   const host = "{{ request.get_host }}"
+
+   const media = 'http://' + host + '/media/'
+
+   $(document).ready(function() {
+        $('select').on('change', function() {
+            var specializationpk = this.value
+            var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+            
+            $.post(BASE_URL, {specializationpk: specializationpk, csrfmiddlewaretoken: csrfmiddlewaretoken}, function(res){
+                var data = res.data
+                $('.list_subjects').empty()
+
+                for(var i = 0; i < data.length; i++){
+                    var teaching = data[i].teaching ? "Đang giảng dạy" : "Không giảng dạy"
+                    $('.list_subjects').append('<div class="col-sm-4"> <div class="card"> <div class="card-header"> <h5 class="card-title mb-0">'+data[i].name+'</h5> </div> <div class="card-body"> <ul> <li>Tín chỉ: '+data[i].credits+'</li> <hr> <li>Trạng thái: '+teaching+' </li> <hr> <li> Khoa: '+data[i].specialization__name+' </li> <hr> </ul> <a class="btn btn-primary" href="'+BASE_URL.href + data[i].slug + '/'+'">Quản Lý Điểm</a> </div> </div> </div>')
+                }
+            })
+        })
+   })
+</script>
+
+{% endblock content %}

@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title%}
+{{ title }}
+{% endblock title %}
+
+{% block avatar%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar %}
+
+
+{% block avatar-round%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar-round %}
+
+
+{% block name%}
+{{ fullname }}
+{% endblock name %}
+
+
+{% block specialization%}
+{{ specialization }}
+{% endblock specialization %}
+
+{% block content%}
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">{{ classname }}: {{ subject_name }}</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                <li class="breadcrumb-item active"><a href="{% url 'index_scores' %}">Scores</a></li>
+                <li class="breadcrumb-item active">{{ classname }}</li>
+            </ul>
+        </div>
+        <div class="col-auto text-right float-right ml-auto">
+            <a href="/sinh-vien/xuat/" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Xuất
+                Execl</a>
+            <a href="/sinh-vien/them/" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-table">
+            <div class="card-body">
+                <div class="table-responsive" style="overflow-x: hidden;">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                
+                            </div>
+                            <div class="col-sm-12 col-md-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-hover table-center mb-0 datatable dataTable no-footer"
+                                    id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1" aria-sort="ascending"
+                                                aria-label="ID: activate to sort column descending"
+                                                style="width: 67.1562px;">MSSV</th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Name: activate to sort column ascending"
+                                                style="width: 196.016px;">Họ Tên</th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Class: activate to sort column ascending"
+                                                style="width: 56.1406px;">Lớp Học</th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="DOB: activate to sort column ascending"
+                                                style="width: 96.125px;">Chuyên Ngành</th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Parent Name: activate to sort column ascending"
+                                                style="width: 140.578px;">Điểm Số 1</th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Mobile Number: activate to sort column ascending"
+                                                style="width: 140.578px;">Điểm Số 2</th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Address: activate to sort column ascending"
+                                                style="width: 140.578px;">Điểm Kết Thúc</th>
+                                            <th class="text-right sorting" tabindex="0"
+                                                aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                                aria-label="Action: activate to sort column ascending"
+                                                style="width: 87.2344px;">Hành Động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in scores %}
+                                            <tr role="row" class="even">
+                                                <td class="sorting_1">{{ item.student.pk }}</td>
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        <a href="" class="avatar avatar-sm mr-2"><img
+                                                                class="avatar-img rounded-circle"
+                                                                src="{{ item.student.avatar.url }}"
+                                                                alt="User Image"></a>
+                                                        <a href="">{{ item.student.fullname }}</a>
+                                                    </h2>
+                                                </td>
+                                                <td>{{ item.classname.name }}</td>
+                                                <td>{{ item.specialization.name }}</td>
+                                                <td class="score1">{{ item.score1 }}</td>
+                                                <td class="score2">{{ item.score2 }}</td>
+                                                <td class="score3">{{ item.score3 }}</td>
+                                                <td class="text-right">
+                                                    <div class="actions edit">
+                                                        <a href="#" class="btn btn-sm bg-success-light mr-2 edit_score">
+                                                            <i class="fas fa-pen"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="actions done" style="display: none;">
+                                                        <a href="#" class="btn btn-sm bg-success-light mr-2 done_score">
+                                                            <span>Xong</span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>   
+       const BASE_URL = window.location
+    
+       const host = "{{ request.get_host }}"
+    
+       const media = 'http://' + host + '/media/'
+
+       var CHANGE = false
+
+       $(document).ready(function() {
+            var score1 = $('.score1').text()
+            var score2 = $('.score2').text()
+            var score3 = $('.score3').text()
+
+            $('.edit_score').click(function(event){
+
+                $('.score1').empty()
+                $('.score1').append('<input type="text" class="s1" style="border: none; width: 40%;" value="'+score1+'">')
+
+                $('.score2').empty()
+                $('.score2').append('<input type="text" class="s2" style="border: none; width: 40%;" value="'+score2+'">')
+
+                $('.score3').empty()
+                $('.score3').append('<input type="text" class="s3" style="border: none; width: 40%;" value="'+score3+'">')
+                
+                $('.edit').css("display", "none");
+                $('.done').css("display", "unset");
+            })
+
+            $('.done_score').click(function(event){
+
+                var s1 = $('.s1').val()
+                var s2 = $('.s2').val()
+                var s3 = $('.s3').val()
+                
+                if (s1 == "" || s2 == "" || s3 == ""){
+                    alert("Vui lòng không bỏ trống điểm!")
+                    return
+                }else if(s1 > 10 || s2 > 10 || s3 > 10){
+                    alert("Điểm chỉ trong khoảng từ 0 điểm - 10 điểm")
+                    return
+                }else if(s1 < 0 || s2 < 0 || s3 < 0){
+                    alert("Điểm chỉ trong khoảng từ 0 điểm - 10 điểm")
+                    return
+                }else{
+                    score1 = s1
+                    score2 = s2
+                    score3 = s3
+                }
+
+                $('.score1').empty()
+                $('.score1').append(score1)
+
+                $('.score2').empty()
+                $('.score2').append(score2)
+
+                $('.score3').empty()
+                $('.score3').append(score3)
+
+                $('.edit').css("display", "unset");
+                $('.done').css("display", "none");
+            })
+            
+       })
+    </script>
+{% endblock content %}

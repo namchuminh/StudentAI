@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title%}
+{{ title }}
+{% endblock title %}
+
+{% block avatar%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar %}
+
+
+{% block avatar-round%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar-round %}
+
+
+{% block name%}
+{{ fullname }}
+{% endblock name %}
+
+
+{% block specialization%}
+{{ specialization }}
+{% endblock specialization %}
+
+
+
+{% block content%}
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Scores - Class Name</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                <li class="breadcrumb-item active"><a href="{% url 'index_scores' %}">Scores</a></li>
+                <li class="breadcrumb-item active">Class Name</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-table">
+            <div class="card-body">
+                <div class="table-responsive" style="overflow-x: hidden;">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <label for="">Các lớp có môn học: {{ subject_name }} </label>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row list-group">
+                            <ul class="">
+                                {% for item in classname %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span style="color: #447e9b">
+                                            <a href="{% url 'scores_subject' slug_subject=subject_slug slug_class=item.slug %}">{{ item.name }}</a>
+                                            <br>
+                                            <span>Sĩ số: {{ item.number }}</span>
+                                        </span>
+                                        <span class="badge badge-primary badge-pill" ><a href="{% url 'scores_subject' slug_subject=subject_slug slug_class=item.slug %}" style="color: white;">Quản Lý Điểm</a></span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
