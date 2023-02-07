@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import InfoUser
 from subjects.models import Subject
+from students.models import ClassName, Students, Specialization
 # Create your views here.
 
 class Login(View):
@@ -53,11 +54,24 @@ class Home(View):
         
         user = User.objects.all().get(pk=request.user.pk)
         infouser = InfoUser.objects.all().get(user=user)
+        
+        class_count = ClassName.objects.all().filter().count()
+        
+        student_count = Students.objects.all().filter().count()
+        
+        subject_count = Subject.objects.all().filter().count()
+        
+        specialization_count = Specialization.objects.all().filter().count()
+        
         data = {
             'title': 'Trang Quản Trị - StudentAI',
             'fullname': infouser.user.first_name + " " + infouser.user.last_name,
             'avatar': infouser.avatar,
             'specialization': infouser.specialization,
+            'class_count': class_count,
+            'student_count': student_count,
+            'subject_count': subject_count,
+            'specialization_count': specialization_count,
         }
         return render(request,self.template_name,data)
 

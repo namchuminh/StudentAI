@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title%}
+{{ title }}
+{% endblock title %}
+
+{% block avatar%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar %}
+
+
+{% block avatar-round%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar-round %}
+
+
+{% block name%}
+{{ fullname }}
+{% endblock name %}
+
+
+{% block specialization%}
+{{ specialization }}
+{% endblock specialization %}
+
+
+
+{% block content%}
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Attendance</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                <li class="breadcrumb-item active">Attendance</li>
+            </ul>
+        </div>
+        <div class="col-auto text-right float-right ml-auto">
+            <a href="{% url 'cropface_students' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-5">
+            {% csrf_token %}
+            <div class="text-center shadow-sm p-3 mb-3 bg-white rounded video_server">
+                <img src="{% url 'video-feed' %}" alt="" width="100%" class="video_feed" >
+            </div>
+            <div class="text-center">
+                <button type="submit" name="submit" value="submit" class="btn btn-primary check_face">Điểm Danh</button>
+            </div>
+    </div>
+    <div class="col-sm-7">
+            <!-- Student Profile -->
+            <div class="student-profile">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-transparent text-center">
+                                <img src="{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}video_stream/user.png" alt="" width="70%" class="face_detect">
+                            </div>
+                            <div class="card-body">
+                                <h4 class="text-left">Chu Minh Nam</h4>
+                                <p class="mb-0"><strong class="pr-1">Student ID:</strong>321000001</p>
+                                <p class="mb-0"><strong class="pr-1">Class:</strong>4</p>
+                                <p class="mb-0"><strong class="pr-1">Section:</strong>A</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-transparent border-0">
+                                <h3 class="mb-0"><i class="far fa-clone pr-1"></i>General Information</h3>
+                            </div>
+                            <div class="card-body pt-0">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th width="30%">Roll</th>
+                                        <td width="2%">:</td>
+                                        <td>125</td>
+                                    </tr>
+                                    <tr>
+                                        <th width="30%">Academic Year </th>
+                                        <td width="2%">:</td>
+                                        <td>2020</td>
+                                    </tr>
+                                    <tr>
+                                        <th width="30%">Gender</th>
+                                        <td width="2%">:</td>
+                                        <td>Male</td>
+                                    </tr>
+                                    <tr>
+                                        <th width="30%">Religion</th>
+                                        <td width="2%">:</td>
+                                        <td>Group</td>
+                                    </tr>
+                                    <tr>
+                                        <th width="30%">blood</th>
+                                        <td width="2%">:</td>
+                                        <td>B+</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+
+    const BASE_URL = window.location
+
+    const host = "{{ request.get_host }}"
+
+    const media = 'http://' + host + '/media/'
+
+    var URL_VIDEO = "{% url 'video-feed' %}"
+    $(document).ready(function(){
+        $('.video_server').empty()
+        $('.video_server').append('<div class="spinner-grow text-primary" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-secondary" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-success" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-danger" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-warning" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-info" role="status"> <span class="sr-only">Loading...</span> </div>')
+        setTimeout(() => {
+            $('.video_server').empty()
+            $('.video_server').append('<img src="'+URL_VIDEO+'" alt="" width="100%" class="video_feed" >')
+        }, 3000);
+
+        $('.check_face').click(function(event){
+            event.preventDefault()
+            var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+            $.post(BASE_URL.href,{csrfmiddlewaretoken: csrfmiddlewaretoken}, function(res){
+                $(".face_detect").empty()
+                $(".face_detect").attr("src",res);
+            })
+        })
+    });
+</script>
+{% endblock content %}

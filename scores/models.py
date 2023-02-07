@@ -12,10 +12,12 @@ class Scores(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     classname = models.ForeignKey(ClassName, on_delete=models.CASCADE, blank=True, null=True)
     specialization = models.ForeignKey(Specialization, on_delete=models.CASCADE, blank=True, null=True)
+    sum = models.FloatField(default=0)
     
     def save(self, *args, **kwargs):
         self.classname = self.student.classname
         self.specialization = self.student.specialization
+        self.sum = (self.score1 * 0.1) + (self.score2 * 0.2) + (self.score3 * 0.7)
         super(Scores, self).save(*args, **kwargs)
         
     def __str__(self):

@@ -47,7 +47,7 @@
     <div class="col-sm-12">
         <div class="card card-table">
             <div class="card-body">
-                <div class="table-responsive" style="overflow-x: hidden;">
+                <div class="table-responsive">
                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
@@ -64,35 +64,39 @@
                                             <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0"
                                                 rowspan="1" colspan="1" aria-sort="ascending"
                                                 aria-label="ID: activate to sort column descending"
-                                                style="width: 67.1562px;">MSSV</th>
+                                                style="width: 10.1562px;">MSSV</th>
                                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Name: activate to sort column ascending"
-                                                style="width: 196.016px;">Họ Tên</th>
+                                                style="width: 10.016px;">Họ Tên</th>
                                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Class: activate to sort column ascending"
-                                                style="width: 56.1406px;">Lớp Học</th>
+                                                style="width: 10.1406px;">Lớp Học</th>
                                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
                                                 rowspan="1" colspan="1"
                                                 aria-label="DOB: activate to sort column ascending"
-                                                style="width: 96.125px;">Chuyên Ngành</th>
+                                                style="width: 10.125px;">Chuyên Ngành</th>
                                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Parent Name: activate to sort column ascending"
-                                                style="width: 40.578px;">Điểm Số 1</th>
+                                                style="width: 10.578px;">Điểm Số 1</th>
                                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Mobile Number: activate to sort column ascending"
-                                                style="width: 40.578px;">Điểm Số 2</th>
+                                                style="width: 10.578px;">Điểm Số 2</th>
                                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Address: activate to sort column ascending"
-                                                style="width: 40.578px;">Điểm Kết Thúc</th>
+                                                style="width: 10.578px;">Điểm Kết Thúc</th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Address: activate to sort column ascending"
+                                                style="width: 10.578px;">Điểm Trung Bình</th>
                                             <th class="text-right sorting" tabindex="0"
                                                 aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                                 aria-label="Action: activate to sort column ascending"
-                                                style="width: 87.2344px;">Hành Động</th>
+                                                style="width: 10.2344px;">Hành Động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -110,12 +114,13 @@
                                                 </td>
                                                 <td>{{ item.classname.name }}</td>
                                                 <td>{{ item.specialization.name }}</td>
-                                                <td class="score1">{{ item.score1 }}</td>
-                                                <td class="score2">{{ item.score2 }}</td>
-                                                <td class="score3">{{ item.score3 }}</td>
+                                                <td class="score1-t{{ item.pk }}">{{ item.score1 }}</td>
+                                                <td class="score2-t{{ item.pk }}">{{ item.score2 }}</td>
+                                                <td class="score3-t{{ item.pk }}">{{ item.score3 }}</td>
+                                                <td class="sum-t{{ item.pk }}">{{ item.sum }}</td>
                                                 <td class="text-right">
                                                     <div class="actions edit">
-                                                        <a href="#" class="btn btn-sm bg-success-light mr-2 edit_score">
+                                                        <a href="#" class="btn btn-sm bg-success-light mr-2 edit_score" value="{{ item.pk }}">
                                                             <i class="fas fa-pen"></i>
                                                         </a>
                                                     </div>
@@ -146,20 +151,24 @@
        const media = 'http://' + host + '/media/'
 
        $(document).ready(function() {
-            var score1 = $('.score1').text()
-            var score2 = $('.score2').text()
-            var score3 = $('.score3').text()
+            
 
             $('.edit_score').click(function(event){
 
-                $('.score1').empty()
-                $('.score1').append('<input type="text" class="s1" style="border: none; " value="'+score1+'">')
+                var pk = $(this).attr('value')
 
-                $('.score2').empty()
-                $('.score2').append('<input type="text" class="s2" style="border: none; " value="'+score2+'">')
+                var score1 = $('.score1-t'+pk).text()
+                var score2 = $('.score2-t'+pk).text()
+                var score3 = $('.score3-t'+pk).text()
 
-                $('.score3').empty()
-                $('.score3').append('<input type="text" class="s3" style="border: none; " value="'+score3+'">')
+                $('.score1-t'+pk).empty()
+                $('.score1-t'+pk).append('<input type="text" class="s1" style="border: none; width: 50px;" value="'+score1+'">')
+
+                $('.score2-t'+pk).empty()
+                $('.score2-t'+pk).append('<input type="text" class="s2" style="border: none; width: 50px;" value="'+score2+'">')
+
+                $('.score3-t'+pk).empty()
+                $('.score3-t'+pk).append('<input type="text" class="s3" style="border: none; width: 50px;" value="'+score3+'">')
                 
                 $('.edit').css("display", "none");
                 $('.done').css("display", "unset");
@@ -192,24 +201,30 @@
                 $.post(BASE_URL, { pk: pk, score1: score1, score2: score2, score3: score3, csrfmiddlewaretoken: csrfmiddlewaretoken}, function(res){
 
                     if(res.data == true){
-                        $('.score1').empty()
-                        $('.score1').append(score1)
+                        $('.score1-t'+pk).empty()
+                        $('.score1-t'+pk).append(score1)
 
-                        $('.score2').empty()
-                        $('.score2').append(score2)
+                        $('.score2-t'+pk).empty()
+                        $('.score2-t'+pk).append(score2)
 
-                        $('.score3').empty()
-                        $('.score3').append(score3)
+                        $('.score3-t'+pk).empty()
+                        $('.score3-t'+pk).append(score3)
+
+                        var sum = (score1 * 0.1) + (score2 * 0.2) + (score3 * 0.7)
+
+                        $('.sum-t'+pk).empty()
+                        $('.sum-t'+pk).append(sum)
+
                     }else{
                         alert("Điểm không hợp lệ, vui lòng nhập lại!")
-                        $('.score1').empty()
-                        $('.score1').append(score1)
+                        $('.score1-t'+pk).empty()
+                        $('.score1-t'+pk).append(score1)
 
-                        $('.score2').empty()
-                        $('.score2').append(score2)
+                        $('.score2-t'+pk).empty()
+                        $('.score2-t'+pk).append(score2)
 
-                        $('.score3').empty()
-                        $('.score3').append(score3)
+                        $('.score3-t'+pk).empty()
+                        $('.score3-t'+pk).append(score3)
                     }
 
                 })
