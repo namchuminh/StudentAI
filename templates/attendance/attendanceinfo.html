@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title%}
+{{ title }}
+{% endblock title %}
+
+{% block avatar%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar %}
+
+
+{% block avatar-round%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar-round %}
+
+
+{% block name%}
+{{ fullname }}
+{% endblock name %}
+
+
+{% block specialization%}
+{{ specialization }}
+{% endblock specialization %}
+
+
+
+{% block content%}
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Attendance Information</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                <li class="breadcrumb-item active">Attendance Information</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-table">
+            <div class="card-body">
+                <div class="row">
+                    {% csrf_token %}
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Chọn Môn Học</label>
+                            <select class="form-control subject" name="subject" id="">
+                                <option value="" hidden>--Chọn--</option>
+                                {% for item in subject %}
+                                <option value="{{ item.specialization.pk }},{{ item.pk }}">{{item.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Chọn Lớp Học</label>
+                            <select class="form-control classname" name="classname">
+                                <option value="" hidden>--Chọn--</option>
+                                {% for item in classname %}
+                                <option value="{{ item.pk }}">{{item.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Chọn Ngày</label>
+                            <input type="date" name="birthday" class="form-control date">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Chức Năng</label>
+                            <input type="submit" name="birthday" class="form-control btn btn-primary view_attendanceinfo"
+                                value="XEM THÔNG TIN">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-hover table-center mb-0 datatable dataTable no-footer"
+                            id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" aria-sort="ascending"
+                                        aria-label="ID: activate to sort column descending" style="width: 67.1562px;">
+                                        MSSV</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" aria-label="Name: activate to sort column ascending"
+                                        style="width: 196.016px;">Họ Tên</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" aria-label="Class: activate to sort column ascending"
+                                        style="width: 56.1406px;">Lớp Học</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" aria-label="DOB: activate to sort column ascending"
+                                        style="width: 96.125px;">Chuyên Ngành</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" aria-label="Parent Name: activate to sort column ascending"
+                                        style="width: 120.016px;">Ngày Sinh</th>
+                                    <th class="text-center" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" aria-label="Mobile Number: activate to sort column ascending"
+                                        style="width: 140.578px;">Điểm Danh</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+    const BASE_URL = window.location
+
+    const host = "{{ request.get_host }}"
+
+    const media = 'http://' + host + '/media/'
+
+    $(document).ready(function () {
+        $('.subject').on('change', function () {
+            var specialization = this.value.split(",")[0]
+            var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+
+            $.post(BASE_URL, { specialization: specialization, csrfmiddlewaretoken: csrfmiddlewaretoken }, function (res) {
+                var data = res.data
+                $('.classname').empty()
+                $('.classname').append('<option value="" hidden>--Chọn--</option>')
+                for (var i = 0; i < data.length; i++) {
+                    $('.classname').append('<option value="' + data[i].pk + '" >' + data[i].name + '</option>')
+                }
+            })
+        });
+
+        $('.view_attendanceinfo').click(function(event){
+            event.preventDefault()
+            var classname = $('.classname').val()
+            var subject = $('.subject').val()
+            subject = subject.split(",")[1]
+            var date = $('.date').val()
+            var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+            $.post(BASE_URL, { classname: classname, subject: subject, date: date, csrfmiddlewaretoken: csrfmiddlewaretoken }, function (res) {
+                var data = res.data
+
+                var student = data.data_student
+                var attendanceinfo = data.data_attendanceinfo
+                $('tbody').empty()
+
+                for(var i = 0; i < student.length; i++){
+                    try {
+                        var check = student[i].pk == attendanceinfo[i].student__pk ? "checked" : ""
+                        $('tbody').append('<tr role="row" class="even"> <td class="sorting_1">'+student[i].pk+'</td> <td> <h2 class="table-avatar"> <a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="'+media+student[i].avatar+'" alt="User Image"></a> <a href="#">'+student[i].fullname+'</a> </h2> </td> <td>'+student[i].classname__name+'</td> <td>'+student[i].specialization__name+'</td> <td>'+student[i].birthday+'</td> <td style="text-align: center;"><input class="form-check-input" type="checkbox" id="flexCheckDefault" '+check+'></td> </tr>')
+                    }
+                    catch(err) {
+                        $('tbody').append('<tr role="row" class="even"> <td class="sorting_1">'+student[i].pk+'</td> <td> <h2 class="table-avatar"> <a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="'+media+student[i].avatar+'" alt="User Image"></a> <a href="#">'+student[i].fullname+'</a> </h2> </td> <td>'+student[i].classname__name+'</td> <td>'+student[i].specialization__name+'</td> <td>'+student[i].birthday+'</td> <td style="text-align: center;"><input class="form-check-input" type="checkbox" id="flexCheckDefault"></td> </tr>')
+                    }
+                    
+                }
+
+            })
+        })
+
+    });
+</script>
+{% endblock content %}

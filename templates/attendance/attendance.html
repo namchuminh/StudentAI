@@ -44,70 +44,49 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-5">
-            {% csrf_token %}
-            <div class="text-center shadow-sm p-3 mb-3 bg-white rounded video_server">
-                <img src="{% url 'video-feed' %}" alt="" width="100%" class="video_feed" >
-            </div>
-            <div class="text-center">
-                <button type="submit" name="submit" value="submit" class="btn btn-primary check_face">Điểm Danh</button>
-            </div>
+    <div class="col-sm-6">
+        {% csrf_token %}
+        <div class="text-center shadow-sm p-3 mb-3 bg-white rounded video_server">
+            <img src="{% url 'video-feed' %}" alt="" width="100%" class="video_feed">
+        </div>
+        <div class="text-center">
+            <button type="submit" name="submit" value="submit" class="btn btn-primary check_face">Điểm Danh</button>
+        </div>
     </div>
-    <div class="col-sm-7">
-            <!-- Student Profile -->
-            <div class="student-profile">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card shadow-sm">
-                            <div class="card-header bg-transparent text-center">
-                                <img src="{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}video_stream/user.png" alt="" width="70%" class="face_detect">
-                            </div>
-                            <div class="card-body">
-                                <h4 class="text-left">Chu Minh Nam</h4>
-                                <p class="mb-0"><strong class="pr-1">Student ID:</strong>321000001</p>
-                                <p class="mb-0"><strong class="pr-1">Class:</strong>4</p>
-                                <p class="mb-0"><strong class="pr-1">Section:</strong>A</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card shadow-sm">
-                            <div class="card-header bg-transparent border-0">
-                                <h3 class="mb-0"><i class="far fa-clone pr-1"></i>General Information</h3>
-                            </div>
-                            <div class="card-body pt-0">
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th width="30%">Roll</th>
-                                        <td width="2%">:</td>
-                                        <td>125</td>
-                                    </tr>
-                                    <tr>
-                                        <th width="30%">Academic Year </th>
-                                        <td width="2%">:</td>
-                                        <td>2020</td>
-                                    </tr>
-                                    <tr>
-                                        <th width="30%">Gender</th>
-                                        <td width="2%">:</td>
-                                        <td>Male</td>
-                                    </tr>
-                                    <tr>
-                                        <th width="30%">Religion</th>
-                                        <td width="2%">:</td>
-                                        <td>Group</td>
-                                    </tr>
-                                    <tr>
-                                        <th width="30%">blood</th>
-                                        <td width="2%">:</td>
-                                        <td>B+</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label>Chọn Môn Học</label>
+            <select class="form-control subject" name="subject" id="">
+                <option value="" hidden>--Chọn--</option>
+                {% for item in subject %}
+                    <option value="{{ item.specialization.pk }}"  >{{item.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Chọn Lớp</label>
+            <select class="form-control classname" name="classname">
+                <option value="" hidden>--Chọn--</option>
+            </select>
+        </div>
+        <div class="card ttsv" style="display: none;">
+            <div class="row g-0 align-items-center">
+                <div class="col-sm-3 col-4">
+                    <img src="{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}video_stream/user.png" alt=""
+                        width="100%" class="face_detect">
+                </div>
+                <div class="col-sm-9 col-8">
+                    <div class="card-body text-left">
+                        <h5 class="text-left tsv" >#student_name</h5>
+                        <hr>
+                        <p class="mb-0"><strong class="pr-1">MSSV:</strong><span class="mssv"></span></p>
+                        <p class="mb-0"><strong class="pr-1">Lớp Học:</strong><span class="lh"></span></p>
+                        <p class="mb-0"><strong class="pr-1">Ngày Sinh:</strong><span class="ns"></span></p>
+                        <p class="mb-0"><strong class="pr-1">Giới Tính:</strong><span class="gt"></span></p>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -120,22 +99,78 @@
     const media = 'http://' + host + '/media/'
 
     var URL_VIDEO = "{% url 'video-feed' %}"
-    $(document).ready(function(){
+    $(document).ready(function () {
         $('.video_server').empty()
         $('.video_server').append('<div class="spinner-grow text-primary" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-secondary" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-success" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-danger" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-warning" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-info" role="status"> <span class="sr-only">Loading...</span> </div>')
         setTimeout(() => {
             $('.video_server').empty()
-            $('.video_server').append('<img src="'+URL_VIDEO+'" alt="" width="100%" class="video_feed" >')
-        }, 3000);
+            $('.video_server').append('<img src="' + URL_VIDEO + '" alt="" width="100%" class="video_feed" >')
+        }, 4000);
 
-        $('.check_face').click(function(event){
+        $('.check_face').click(function (event) {
             event.preventDefault()
+
+            if($('.classname').val() == "" || $('.classname').val() == undefined){
+                alert("Vui lòng chọn lớp học!")
+                return
+            }
+
             var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
-            $.post(BASE_URL.href,{csrfmiddlewaretoken: csrfmiddlewaretoken}, function(res){
-                $(".face_detect").empty()
-                $(".face_detect").attr("src",res);
+            var classname = $('.classname').val()
+            var subject = $('.subject').val()
+
+            console.log(s)
+            $.post(BASE_URL.href, { csrfmiddlewaretoken: csrfmiddlewaretoken, classname: classname, subject: subject }, function (res) {
+
+                if(res == "check"){
+                    alert("Sinh viên này đã điểm danh trước đó!")
+                    return
+                }else if(res == "false"){
+                    alert("Không nhận dạng được sinh viên! Vui lòng điểm danh lại!")
+                    return
+                }else{
+                    var data = res.data[0]
+
+                    $(".ttsv").css("display", "unset");
+
+                    $(".tsv").empty()
+                    $(".tsv").text(data.fullname)
+
+                    $(".mssv").empty()
+                    $(".mssv").text(data.pk)
+
+                    $(".lh").empty()
+                    $(".lh").text(data.classname__name)
+
+                    $(".ns").empty()
+                    $(".ns").text(data.birthday)
+
+                    $(".gt").empty()
+                    $(".gt").text(data.gender == true ? "Nam" : "Nữ")
+
+                    $(".face_detect").empty()
+                    $(".face_detect").attr("src", media + data.avatar);
+                }
             })
         })
+
+
+        $('.subject').on('change', function() {
+            var specialization = this.value
+            var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+    
+            $.post(BASE_URL, {specialization: specialization, csrfmiddlewaretoken: csrfmiddlewaretoken}, function(res){
+                var data = res.data
+                $('.classname').empty()
+                $('.classname').append('<option value="" hidden>--Chọn--</option>')
+                for(var i = 0; i < data.length; i++){
+                    $('.classname').append('<option value="'+ data[i].pk +'" >'+ data[i].name + '</option>')
+                }
+            })
+       });
+
     });
+
+    
 </script>
 {% endblock content %}

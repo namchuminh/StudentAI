@@ -73,7 +73,7 @@
         <div class="form-group">
             <label>Trạng Thái</label>
             <hr>
-            <div>
+            <div class="img_stt" style="overflow-y: scroll; height: 100px;">
                 <span>Chưa chụp ảnh...</span>
                 <br>
             </div>
@@ -93,6 +93,8 @@
     var URL_VIDEO = "{% url 'video-feed' %}"
 
     var student = 0
+    var img_stt = 0
+
     $(document).ready(function(){
         $('.video_server').empty()
         $('.video_server').append('<div class="spinner-grow text-primary" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-secondary" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-success" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-danger" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-warning" role="status"> <span class="sr-only">Loading...</span> </div> <div class="spinner-grow text-info" role="status"> <span class="sr-only">Loading...</span> </div>')
@@ -103,14 +105,31 @@
 
         $('.check_face').click(function(event){
             event.preventDefault()
-            setInterval(() => {
+            if($('.students').val() == "" || $('.students').val() == undefined){
+                alert("Vui lòng chọn sinh viên!")
+                return
+            }
+            
+            $('.img_stt').empty()
+            myInterval = setInterval(() => {
+
                 student = $('.students').val()
                 var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
                 $.post(BASE_URL, {csrfmiddlewaretoken: csrfmiddlewaretoken, student: student, stt: 0}, function(res){
-                    console.log(res)
+                    if(res == 1){
+                        img_stt += 1
+                        $('.img_stt').append('<span>Đã chụp ảnh '+ img_stt +'/30 ...</span> <br>')
+                    }
+                    if(res == 0){
+                        $('.img_stt').append('<span>Vui lòng chỉnh đúng mặt ...</span> <br>')
+                    }
+                    d = $('.img_stt');
+                    d.scrollTop(d.prop("scrollHeight"));
                 })
-            }, 3000);
-            
+                if(img_stt == 29){
+                    clearInterval(myInterval)
+                }
+            }, 1000);
         })
 
         $('.classname').on('change', function() {
