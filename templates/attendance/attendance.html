@@ -59,7 +59,7 @@
             <select class="form-control subject" name="subject" id="">
                 <option value="" hidden>--Chọn--</option>
                 {% for item in subject %}
-                    <option value="{{ item.specialization.pk }}"  >{{item.name}}</option>
+                    <option value="{{ item.specialization.pk }},{{ item.pk }}"  >{{item.name}}</option>
                 {% endfor %}
             </select>
         </div>
@@ -118,9 +118,9 @@
             var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
             var classname = $('.classname').val()
             var subject = $('.subject').val()
+            subject = subject.split(",")[1]
 
-            console.log(s)
-            $.post(BASE_URL.href, { csrfmiddlewaretoken: csrfmiddlewaretoken, classname: classname, subject: subject }, function (res) {
+            $.post(BASE_URL, { csrfmiddlewaretoken: csrfmiddlewaretoken, classname: classname, subject: subject }, function (res) {
 
                 if(res == "check"){
                     alert("Sinh viên này đã điểm danh trước đó!")
@@ -156,7 +156,8 @@
 
 
         $('.subject').on('change', function() {
-            var specialization = this.value
+            var specialization = this.value.split(",")[0]
+            
             var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
     
             $.post(BASE_URL, {specialization: specialization, csrfmiddlewaretoken: csrfmiddlewaretoken}, function(res){

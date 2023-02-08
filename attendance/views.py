@@ -147,10 +147,11 @@ class Attendance(View):
             # Print prediction and confidence score
             student_pk = class_name[2:]
             
+            print(student_pk)
+            
             try:
                 s = Students.objects.all().filter(pk=student_pk).values('pk', 'fullname', 'birthday', 'gender', 'classname__name', 'avatar')
                 data = list(s)
-                
                 
                 
                 classname = ClassName.objects.all().get(pk=request.POST['classname'])
