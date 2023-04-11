@@ -159,13 +159,17 @@
 
                 for(var i = 0; i < student.length; i++){
                     try {
-                        var check = student[i].pk == attendanceinfo[i].student__pk ? "checked" : ""
+                        var check = ""
+                        for(var j = 0; j < attendanceinfo.length; j++){
+                            if(student[i].pk == attendanceinfo[j].student__pk){
+                                check = "checked"
+                            }
+                        }
                         $('tbody').append('<tr role="row" class="even"> <td class="sorting_1">'+student[i].pk+'</td> <td> <h2 class="table-avatar"> <a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="'+media+student[i].avatar+'" alt="User Image"></a> <a href="#">'+student[i].fullname+'</a> </h2> </td> <td>'+student[i].classname__name+'</td> <td>'+student[i].specialization__name+'</td> <td>'+student[i].birthday+'</td> <td style="text-align: center;"><input class="form-check-input" type="checkbox" id="flexCheckDefault" '+check+'></td> </tr>')
                     }
                     catch(err) {
                         $('tbody').append('<tr role="row" class="even"> <td class="sorting_1">'+student[i].pk+'</td> <td> <h2 class="table-avatar"> <a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="'+media+student[i].avatar+'" alt="User Image"></a> <a href="#">'+student[i].fullname+'</a> </h2> </td> <td>'+student[i].classname__name+'</td> <td>'+student[i].specialization__name+'</td> <td>'+student[i].birthday+'</td> <td style="text-align: center;"><input class="form-check-input" type="checkbox" id="flexCheckDefault"></td> </tr>')
                     }
-                    
                 }
 
             })
