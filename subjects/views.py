@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User
 from students.models import Specialization
 from subjects.models import Subject
+from students.models import Students
 from user.models import InfoUser
 
 # Create your views here.
@@ -16,6 +17,20 @@ class ListSubjects(View):
         return super(ListSubjects, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
+        
+        if request.session['isStudent'] == True:
+            user = User.objects.all().get(pk=request.user.pk)
+            s = Students.objects.all().get(user=user)
+            subjects = Subject.objects.all().filter(specialization=s.specialization)
+            data = {
+                'title': 'Trang Thông Tin Sinh Viên - StudentAI',
+                'fullname': user.first_name + " " + user.last_name,
+                'avatar': s.avatar,
+                'specialization': s.specialization,
+                'subjects': subjects,
+            }
+            return render(request,self.template_name,data)
+        
         user = User.objects.all().get(pk=request.user.pk)
         infouser = InfoUser.objects.all().get(user=user)
         
@@ -40,6 +55,9 @@ class CreateSubjects(View):
         return super(CreateSubjects, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
+
+        if request.session['isStudent'] == True:
+            return redirect('list_subjects')
         
         user = User.objects.all().get(pk=request.user.pk)
         infouser = InfoUser.objects.all().get(user=user)
@@ -56,6 +74,8 @@ class CreateSubjects(View):
         return render(request,self.template_name,data)
     
     def post(self, request, *args, **kwargs):
+        if request.session['isStudent'] == True:
+            return redirect('list_subjects')
         
         user = User.objects.all().get(pk=request.user.pk)
         infouser = InfoUser.objects.all().get(user=user)
@@ -96,6 +116,9 @@ class UpdateSubjects(View):
         return super(UpdateSubjects, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, pk, *args, **kwargs):
+        if request.session['isStudent'] == True:
+            return redirect('list_subjects')
+        
         user = User.objects.all().get(pk=request.user.pk)
         infouser = InfoUser.objects.all().get(user=user)
         
@@ -116,6 +139,9 @@ class UpdateSubjects(View):
         return render(request,self.template_name,data)
 
     def post(self, request, pk, *args, **kwargs):
+        if request.session['isStudent'] == True:
+            return redirect('list_subjects')
+        
         user = User.objects.all().get(pk=request.user.pk)
         infouser = InfoUser.objects.all().get(user=user)
         

@@ -39,6 +39,44 @@ def stream():
 def video_feed(request):
     return StreamingHttpResponse(stream(), content_type='multipart/x-mixed-replace; boundary=frame')
 
+class SelectAttendance(View):
+    template_name =  'attendance/selectattendance.html'
+    
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')
+        
+        if request.session['isStudent'] == True:
+            return redirect('home')
+        
+        return super(SelectAttendance, self).dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        user = User.objects.all().get(pk=request.user.pk)
+        infouser = InfoUser.objects.all().get(user=user)
+        
+        subject = Subject.objects.all()
+        
+        data = {
+            'title': 'Điểm Danh Sinh Viên - StudentAI',
+            'fullname': infouser.user.first_name + " " + infouser.user.last_name,
+            'avatar': infouser.avatar,
+            'specialization': infouser.specialization,
+            'subject': subject
+        }
+        
+        return render(request,self.template_name,data)
+    
+    def post(self, request, *args, **kwargs):
+        
+        if len(request.POST) == 2:
+            specialization = Specialization.objects.all().get(pk=request.POST['specialization'])
+            
+            classname = ClassName.objects.all().filter(specialization=specialization).values('pk', 'name')
+            
+            data = list(classname)
+            
+            return JsonResponse({'data': data})
 
 class Attendance(View):
     template_name =  'attendance/attendance.html'
@@ -46,6 +84,10 @@ class Attendance(View):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('login')
+        
+        if request.session['isStudent'] == True:
+            return redirect('home')
+        
         return super(Attendance, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
@@ -163,7 +205,10 @@ class Attendance(View):
                 attendance_infos_check = AttendanceInfo.objects.all().filter(student=student, classname=classname, subject=subject, date = date.today()).count()
                 
                 if(attendance_infos_check == 1):
-                    return HttpResponse('check')
+                    attendance_infos = AttendanceInfo(student=student, classname=classname, subject=subject)
+                    attendance_infos.save()
+                        
+                    return JsonResponse({'data': data})
                 else:
                     attendance_infos = AttendanceInfo(student=student, classname=classname, subject=subject)
                     attendance_infos.save()
@@ -181,6 +226,10 @@ class CropFace(View):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('login')
+        
+        if request.session['isStudent'] == True:
+            return redirect('home')
+        
         return super(CropFace, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
@@ -233,6 +282,10 @@ class AttendanceInformation(View):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('login')
+        
+        if request.session['isStudent'] == True:
+            return redirect('home')
+        
         return super(AttendanceInformation, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):

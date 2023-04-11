@@ -65,7 +65,9 @@
                         <a href="{% url 'home' %}"><i class="fa-sharp fa-solid fa-house"></i> <span> Trang Chủ</span></a>
                      </li>
                      <li>
-                        <a href="{% url 'list_students' %}"><i class="fas fa-user-graduate"></i> <span> Sinh Viên</span> </a>
+                        {% if request.session.isStudent == False %}
+                           <a href="{% url 'list_students' %}"><i class="fas fa-user-graduate"></i> <span> Thông Tin Sinh Viên</span> </a>
+                        {% endif %}
                      </li>
                      <li>
                         <a href="{% url 'list_subjects' %}"><i class="fas fa-book-reader"></i> <span> Môn Học</span></a>
@@ -73,15 +75,18 @@
                      <li>
                         <a href="{% url 'index_scores' %}"><i class="fas fa-clipboard-list"></i> <span> Điểm Số</span></a>
                      </li>
-                     <li class="menu-title">
-                        <span>Điểm Danh</span>
-                     </li>
-                     <li>
-                        <a href="{% url 'attendance_students' %}"><i class="fa-solid fa-user"></i> <span> Điểm Danh </span> </a>
-                     </li>
-                     <li>
-                        <a href="{% url 'attendance_information_students' %}"><i class="fa-sharp fa-solid fa-clipboard-user"></i> <span> Thông Tin Điểm Danh </span> </a>
-                     </li>
+                     {% if request.session.isStudent == False %}
+                        <li class="menu-title">
+                           <span>Điểm Danh</span>
+                        </li>
+                           <li>
+                              <a href="{% url 'attendance_information_students' %}"><i class="fa-sharp fa-solid fa-clipboard-user"></i> <span> Thông Tin Điểm Danh </span> </a>
+                           </li>
+                           <li>
+                              <a href="{% url 'select_attendance' %}"><i class="fa-solid fa-user"></i> <span> Điểm Danh </span> </a>
+                           </li>
+                     {% endif %}
+                     
                   </ul>
                </div>
             </div>

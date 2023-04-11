@@ -1,3 +1,4 @@
+import email
 from django.shortcuts import render, redirect, HttpResponse
 from django.views import View
 from django.core import serializers
@@ -12,6 +13,8 @@ from django.core.files.storage import FileSystemStorage
 import xlwt
 from django.db.models.functions import Cast
 from django.db.models import TextField
+import random
+from django.contrib.auth.hashers import make_password
 
 # Create your views here.
 class ListStudents(View):
@@ -126,9 +129,21 @@ class CreateStudents(View):
                 data["error"] = "Vui lòng nhập đầy đủ thông tin!"
                 return render(request,self.template_name,data)
             else:
+                username = "208103" + str(random.randint(10000, 99999))
+                password = make_password(username, salt=None, hasher='default')
+                usr = User(
+                    username = username,
+                    password = password,
+                    first_name = request.POST['first_name'],
+                    last_name = request.POST['last_name']
+                )
+                usr.save()
+                
+                user = User.objects.all().get(username=username)
                 classname = ClassName.objects.all().get(pk=request.POST['classname'])
                 specialization = Specialization.objects.all().get(pk=request.POST['specialization'])
                 s = Students(
+                    user = user,
                     fullname = request.POST['first_name'] + ' ' + request.POST['last_name'], 
                     birthday = request.POST['birthday'],
                     gender = True if request.POST['gender'] == "1" else False,

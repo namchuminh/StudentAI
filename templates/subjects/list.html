@@ -38,7 +38,9 @@
          </ul>
       </div>
       <div class="col-auto text-right float-right ml-auto">
-         <a href="{% url 'create_subjects' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+         {% if request.session.isStudent == False %}
+            <a href="{% url 'create_subjects' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+         {% endif %}
       </div>
    </div>
 </div>
@@ -70,15 +72,19 @@
                                  <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                     colspan="1" aria-label="Class: activate to sort column ascending"
                                     style="width: 264.75px;">Số Tín Chỉ</th>
-                                 <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
-                                    rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending"
-                                    style="width: 350.078px;">Trạng Thái</th>
+                                 {% if request.session.isStudent == False %}
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                       rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending"
+                                       style="width: 350.078px;">Trạng Thái</th>
+                                 {% endif %}
                                  <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
                                     rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending"
                                     style="width: 350.078px;">Chuyên Ngành</th>
-                                 <th class="text-right sorting" tabindex="0" aria-controls="DataTables_Table_0"
-                                    rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending"
-                                    style="width: 350.078px;">Hành Động</th>
+                                 {% if request.session.isStudent == False %}
+                                    <th class="text-right sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                       rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending"
+                                       style="width: 350.078px;">Hành Động</th>
+                                 {% endif %}
                               </tr>
                            </thead>
                            <tbody>
@@ -92,23 +98,27 @@
                                        </h2>
                                     </td>
                                     <td>{{ item.credits }}</td>
-                                    <td>
-                                       {% if item.teaching %}
-                                          <a href="#" class="btn btn-success">Đang Phụ Trách</a>  
-                                       {% else %}
-                                          <a href="#" class="btn btn-warning">Không Phụ Trách</a>  
-                                       {% endif %}
-                                    </td>
+                                    {% if request.session.isStudent == False %}
+                                       <td>
+                                          {% if item.teaching %}
+                                             <a href="#" class="btn btn-success">Đang Phụ Trách</a>  
+                                          {% else %}
+                                             <a href="#" class="btn btn-warning">Không Phụ Trách</a>  
+                                          {% endif %}
+                                       </td>
+                                    {% endif %}
                                     <td>
                                        {{ item.specialization.name }}
                                     </td>
-                                    <td class="text-right">
-                                       <div class="actions">
-                                          <a href="{% url 'update_subjects' pk=item.pk %}" class="btn btn-sm bg-success-light mr-2">
-                                             <i class="fas fa-pen"></i>
-                                          </a>
-                                       </div>
-                                    </td>
+                                    {% if request.session.isStudent == False %}
+                                       <td class="text-right">
+                                          <div class="actions">
+                                             <a href="{% url 'update_subjects' pk=item.pk %}" class="btn btn-sm bg-success-light mr-2">
+                                                <i class="fas fa-pen"></i>
+                                             </a>
+                                          </div>
+                                       </td>
+                                    {% endif %}
                                  </tr>
                               {% endfor %}
                               

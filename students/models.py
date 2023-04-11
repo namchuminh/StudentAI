@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.utils.text import slugify 
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Specialization(models.Model):
@@ -23,6 +24,7 @@ class ClassName(models.Model):
         return self.name
 
 class Students(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True,null=True)
     fullname = models.CharField(max_length=255, null=False)
     birthday = models.DateField(null=False)
     gender = models.BooleanField(null=False)

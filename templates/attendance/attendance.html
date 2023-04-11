@@ -49,24 +49,18 @@
         <div class="text-center shadow-sm p-3 mb-3 bg-white rounded video_server">
             <img src="{% url 'video-feed' %}" alt="" width="100%" class="video_feed">
         </div>
-        <div class="text-center">
-            <button type="submit" name="submit" value="submit" class="btn btn-primary check_face">Điểm Danh</button>
-        </div>
     </div>
     <div class="col-sm-6">
         <div class="form-group">
-            <label>Chọn Môn Học</label>
+            <label>Môn Học</label>
             <select class="form-control subject" name="subject" id="">
-                <option value="" hidden>--Chọn--</option>
-                {% for item in subject %}
-                    <option value="{{ item.specialization.pk }},{{ item.pk }}"  >{{item.name}}</option>
-                {% endfor %}
+                <option hidden></option>
             </select>
         </div>
         <div class="form-group">
-            <label>Chọn Lớp</label>
+            <label>Lớp Học</label>
             <select class="form-control classname" name="classname">
-                <option value="" hidden>--Chọn--</option>
+                <option hidden></option>
             </select>
         </div>
         <div class="card ttsv" style="display: none;">
@@ -107,69 +101,40 @@
             $('.video_server').append('<img src="' + URL_VIDEO + '" alt="" width="100%" class="video_feed" >')
         }, 4000);
 
-        $('.check_face').click(function (event) {
-            event.preventDefault()
-
-            if($('.classname').val() == "" || $('.classname').val() == undefined){
-                alert("Vui lòng chọn lớp học!")
-                return
-            }
-
+        setInterval(() => {
             var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
-            var classname = $('.classname').val()
-            var subject = $('.subject').val()
+            var classname = localStorage.getItem("classname");
+            var subject = localStorage.getItem("subject");
             subject = subject.split(",")[1]
 
             $.post(BASE_URL, { csrfmiddlewaretoken: csrfmiddlewaretoken, classname: classname, subject: subject }, function (res) {
+                var data = res.data[0]
 
-                if(res == "check"){
-                    alert("Sinh viên này đã điểm danh trước đó!")
-                    return
-                }else if(res == "false"){
-                    alert("Không nhận dạng được sinh viên! Vui lòng điểm danh lại!")
-                    return
-                }else{
-                    var data = res.data[0]
+                $(".ttsv").css("display", "unset");
 
-                    $(".ttsv").css("display", "unset");
+                $(".tsv").empty()
+                $(".tsv").text(data.fullname)
 
-                    $(".tsv").empty()
-                    $(".tsv").text(data.fullname)
+                $(".mssv").empty()
+                $(".mssv").text(data.pk)
 
-                    $(".mssv").empty()
-                    $(".mssv").text(data.pk)
+                $(".lh").empty()
+                $(".lh").text(data.classname__name)
 
-                    $(".lh").empty()
-                    $(".lh").text(data.classname__name)
+                $(".ns").empty()
+                $(".ns").text(data.birthday)
 
-                    $(".ns").empty()
-                    $(".ns").text(data.birthday)
+                $(".gt").empty()
+                $(".gt").text(data.gender == true ? "Nam" : "Nữ")
 
-                    $(".gt").empty()
-                    $(".gt").text(data.gender == true ? "Nam" : "Nữ")
-
-                    $(".face_detect").empty()
-                    $(".face_detect").attr("src", media + data.avatar);
-                }
+                $(".face_detect").empty()
+                $(".face_detect").attr("src", media + data.avatar);
+                
             })
-        })
+        }, 5000);
 
-
-        $('.subject').on('change', function() {
-            var specialization = this.value.split(",")[0]
-            
-            var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
-    
-            $.post(BASE_URL, {specialization: specialization, csrfmiddlewaretoken: csrfmiddlewaretoken}, function(res){
-                var data = res.data
-                $('.classname').empty()
-                $('.classname').append('<option value="" hidden>--Chọn--</option>')
-                for(var i = 0; i < data.length; i++){
-                    $('.classname').append('<option value="'+ data[i].pk +'" >'+ data[i].name + '</option>')
-                }
-            })
-       });
-
+        $('.classname').children('option').text(localStorage.getItem("classname_name"));
+        $('.subject').children('option').text(localStorage.getItem("subject_name"));
     });
 
     

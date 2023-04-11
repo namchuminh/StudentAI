@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title%}
+{{ title }}
+{% endblock title %}
+
+{% block avatar%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar %}
+
+
+{% block avatar-round%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar-round %}
+
+
+{% block name%}
+{{ fullname }}
+{% endblock name %}
+
+
+{% block specialization%}
+{{ specialization }}
+{% endblock specialization %}
+
+
+
+{% block content%}
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Attendance</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                <li class="breadcrumb-item active">Attendance</li>
+            </ul>
+        </div>
+        <div class="col-auto text-right float-right ml-auto">
+            
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-5">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Chọn Môn Học</label>
+            <select class="form-control subject" name="subject" id="">
+                <option value="" hidden>--Chọn--</option>
+                {% for item in subject %}
+                    <option value="{{ item.specialization.pk }},{{ item.pk }}"  >{{item.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="form-group">
+            <label>Chọn Lớp</label>
+            <select class="form-control classname" name="classname">
+                <option value="" hidden>--Chọn--</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label>Điểm Danh</label>
+            <a href="{% url 'attendance_students' %}" class="form-control btn btn-primary view_attendanceinfo"
+                style="color: white; font-weight: bold;">BẮT ĐẦU ĐIỂM DANH</a>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+
+    const BASE_URL = window.location
+
+    const host = "{{ request.get_host }}"
+
+    $(document).ready(function () {
+
+        $('.view_attendanceinfo').click(function(e){
+            if($('.classname').val() == "" || $('.classname').val() == undefined){
+                e.preventDefault()
+                alert("Vui lòng chọn lớp học!")
+            }else{
+                localStorage.clear();
+                localStorage.setItem("classname", $('.classname').val());
+                localStorage.setItem("subject", $('.subject').val());
+
+                localStorage.setItem("classname_name", $(".classname option:selected").text());
+                localStorage.setItem("subject_name", $(".subject option:selected").text());
+
+                console.log(localStorage.getItem("classname_name"))
+                console.log(localStorage.getItem("subject_name"))
+            }
+        })
+    
+        $('.subject').on('change', function() {
+            var specialization = this.value.split(",")[0]
+            
+            var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+    
+            $.post(BASE_URL, {specialization: specialization, csrfmiddlewaretoken: csrfmiddlewaretoken}, function(res){
+                var data = res.data
+                $('.classname').empty()
+                $('.classname').append('<option value="" hidden>--Chọn--</option>')
+                for(var i = 0; i < data.length; i++){
+                    $('.classname').append('<option value="'+ data[i].pk +'" >'+ data[i].name + '</option>')
+                }
+            })
+       });
+
+    });
+
+    
+</script>
+{% endblock content %}

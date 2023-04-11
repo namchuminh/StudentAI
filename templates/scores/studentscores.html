@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title%}
+{{ title }}
+{% endblock title %}
+
+{% block avatar%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar %}
+
+
+{% block avatar-round%}
+{{ 'http://' }}{{ request.get_host }}{{ '/media/' }}{{ avatar }}
+{% endblock avatar-round %}
+
+
+{% block name%}
+{{ fullname }}
+{% endblock name %}
+
+
+{% block specialization%}
+{{ specialization }}
+{% endblock specialization %}
+
+{% block content%}
+<style>
+    .card-table .table td, .card-table .table th{
+        border-right: #dee2e6 solid 1px;
+    }
+</style>
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Scores - {{ fullname }} - {{ classname }}</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                <li class="breadcrumb-item active"><a href="{% url 'index_scores' %}">Scores</a></li>
+                <li class="breadcrumb-item active">{{ classname }}</li>
+            </ul>
+        </div>
+        <div class="col-auto text-right float-right ml-auto">
+            
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-table">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                
+                            </div>
+                            <div class="col-sm-12 col-md-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-hover table-center mb-0 datatable dataTable no-footer"
+                                    id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1" aria-sort="ascending"
+                                                aria-label="ID: activate to sort column descending"
+                                                style="width: 10.1562px;">Tên Môn Học</th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Name: activate to sort column ascending"
+                                                style="width: 10.016px;">Số Tín Chỉ</th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Parent Name: activate to sort column ascending"
+                                                style="width: 10.578px;">Điểm Số 1</th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Mobile Number: activate to sort column ascending"
+                                                style="width: 10.578px;">Điểm Số 2</th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Address: activate to sort column ascending"
+                                                style="width: 10.578px;">Điểm Kết Thúc</th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Address: activate to sort column ascending"
+                                                style="width: 10.578px;">Điểm Trung Bình</th>
+                                            <th class="sorting text-center" tabindex="0"
+                                                aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                                aria-label="Action: activate to sort column ascending"
+                                                style="width: 20.2344px; text-align: left;">Xếp Loại</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if not scores %}
+                                            {% for item in subjects %}
+                                                <tr role="row" class="even">
+                                                    <td>{{ item.name }}</td>
+                                                    <td class="text-center">{{ item.credits }}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            {% for item in subjects %}
+                                                <tr role="row" class="even">
+                                                    <td>{{ item.name }}</td>
+                                                    <td class="text-center">{{ item.credits }}</td>
+                                                    <td class="text-center">
+                                                        {% for score in scores %}
+                                                            {% if item.name == score.subject.name %}
+                                                                {{ score.score1 }}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {% for score in scores %}
+                                                            {% if item.name == score.subject.name %}
+                                                                {{ score.score2 }}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {% for score in scores %}
+                                                            {% if item.name == score.subject.name %}
+                                                                {{ score.score3 }}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {% for score in scores %}
+                                                            {% if item.name == score.subject.name %}
+                                                                {{ score.sum }}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {% for score in scores %}
+                                                            {% if item.name == score.subject.name %}
+                                                                {% if score.sum < 4 %}
+                                                                    <b>F</b>
+                                                                {% elif score.sum >= 4 and score.sum < 5 %}
+                                                                    <b>D</b>
+                                                                {% elif score.sum >= 5 and score.sum < 5.5 %}
+                                                                    <b>D+</b>
+                                                                {% elif score.sum >= 5.5 and score.sum < 6.5 %}
+                                                                    <b>C</b>
+                                                                {% elif score.sum >= 6.5 and score.sum < 7 %}
+                                                                    <b>C+</b>
+                                                                {% elif score.sum >= 7 and score.sum < 8 %}
+                                                                    <b>B</b>
+                                                                {% elif score.sum >= 8 and score.sum < 8.5 %}
+                                                                    <b>B+</b>
+                                                                {% elif score.sum >= 8.5 and score.sum <= 10 %}
+                                                                    <b>A</b>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </td>
+                                                </tr>   
+                                            {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

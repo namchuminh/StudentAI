@@ -9,15 +9,32 @@ from .models import Scores
 
 # Create your views here.
 
+
 class Index(View):
     template_name =  'scores/index.html'
-    
+    student_template_name = 'scores/studentscores.html'
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('login')
         return super(Index, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
+        if request.session['isStudent'] == True:
+            user = User.objects.all().get(pk=request.user.pk)
+            s = Students.objects.all().get(user=user)
+            subjects = Subject.objects.all().filter(specialization = s.specialization)
+            scores = Scores.objects.all().filter(student = s)
+            data = {
+                'title': 'Trang Thông Tin Sinh Viên - StudentAI',
+                'fullname': user.first_name + " " + user.last_name,
+                'avatar': s.avatar,
+                'specialization': s.specialization,
+                'classname': s.classname.name,
+                'subjects': subjects,
+                'scores': scores
+            }
+            return render(request,self.student_template_name,data)
+        
         user = User.objects.all().get(pk=request.user.pk)
         infouser = InfoUser.objects.all().get(user=user)
         
@@ -188,7 +205,7 @@ class AddScoresSubject(View):
         try:
             
             s = Students.objects.all().get(pk=request.POST['student_pk'])
-            check_s = Scores.objects.all().filter(student=s).count()
+            check_s = Scores.objects.all().filter(student=s,subject = subject).count()
             
             if (request.POST['s1'] == "" or request.POST['s2'] == "" or request.POST['s3'] == ""):
                 data['error'] = "Vui lòng không bỏ trống điểm!"
