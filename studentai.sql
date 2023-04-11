@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 08, 2023 at 05:33 PM
+-- Generation Time: Apr 11, 2023 at 03:14 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -41,7 +41,31 @@ CREATE TABLE `attendance_attendanceinfo` (
 
 INSERT INTO `attendance_attendanceinfo` (`id`, `date`, `classname_id`, `student_id`, `subject_id`) VALUES
 (4, '2023-02-08', 1, 1, 1),
-(5, '2023-02-08', 1, 1, 2);
+(5, '2023-02-08', 1, 1, 2),
+(6, '2023-03-19', 1, 1, 1),
+(7, '2023-03-24', 1, 1, 1),
+(8, '2023-04-11', 1, 1, 1),
+(9, '2023-04-11', 1, 1, 3),
+(10, '2023-04-11', 1, 1, 4),
+(11, '2023-04-11', 1, 1, 6),
+(12, '2023-04-11', 1, 1, 7),
+(13, '2023-04-11', 1, 1, 1),
+(14, '2023-04-11', 1, 1, 1),
+(15, '2023-04-11', 1, 1, 1),
+(16, '2023-04-11', 1, 1, 1),
+(17, '2023-04-11', 1, 1, 1),
+(18, '2023-04-11', 1, 1, 1),
+(19, '2023-04-11', 1, 1, 1),
+(20, '2023-04-11', 1, 1, 1),
+(21, '2023-04-11', 1, 1, 4),
+(22, '2023-04-11', 1, 1, 4),
+(23, '2023-04-11', 1, 1, 4),
+(24, '2023-04-11', 1, 1, 4),
+(25, '2023-04-11', 1, 1, 4),
+(26, '2023-04-11', 1, 1, 4),
+(27, '2023-04-11', 1, 1, 2),
+(28, '2023-04-11', 1, 1, 2),
+(29, '2023-04-11', 1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -162,7 +186,10 @@ CREATE TABLE `auth_user` (
 --
 
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
-(1, 'pbkdf2_sha256$320000$LesNZkJOZpoN5oltGGe2Sk$PWRweqovOSrJC8OlJ1uZOSJFH9nq1fhIOmKO2vT7ptc=', '2023-02-07 16:10:31.220642', 1, 'admin', 'Chu Minh', 'Nam', 'chuminhnamma@gmail.com', 1, 1, '2023-02-01 05:58:25.000000');
+(1, 'pbkdf2_sha256$320000$LesNZkJOZpoN5oltGGe2Sk$PWRweqovOSrJC8OlJ1uZOSJFH9nq1fhIOmKO2vT7ptc=', '2023-04-10 18:27:26.299457', 1, 'admin', 'Chu Minh', 'Nam', 'chuminhnamma@gmail.com', 1, 1, '2023-02-01 05:58:25.000000'),
+(2, 'pbkdf2_sha256$320000$n8cctbR5oGbtJFrWWkBsqJ$2tGmaeo2NTH9aqkVHQhpX+jQ8z7Dfg0Wniif1IotaBw=', '2023-04-11 11:05:55.744552', 0, '20810310272', 'Chu Minh', 'Nam', 'minhnamchu@gmail.com', 0, 1, '2023-03-19 12:11:27.000000'),
+(3, 'pbkdf2_sha256$320000$IKtASxmCXNxtWW4PmBdTDO$+HZOzi61TIzQvouTHa8XR6eGFGiMiqOKBARqLfRjyJg=', '2023-04-11 11:37:02.594710', 0, '20810310119', 'Hoàng Công', 'Chất', '', 0, 1, '2023-04-11 11:36:19.827195'),
+(4, 'pbkdf2_sha256$320000$ZiEj251QY4h1gvRnKecjao$c1S3wrX1NwLyQ2CULhbUkQTYSKSn5mNQWCIJwXZO2Go=', NULL, 0, '20810396988', 'Nguyễn Văn', 'Triết', '', 0, 1, '2023-04-11 11:41:40.329273');
 
 -- --------------------------------------------------------
 
@@ -251,7 +278,14 @@ INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`,
 (39, '2023-02-02 07:29:19.121773', '3', 'Kỹ Thuật Lập Trình - Trần Anh Tuấn', 2, '[]', 12, 1),
 (40, '2023-02-08 13:02:07.277352', '3', 'D15CNPM3 - Kỹ Thuật Lập Trình - 2023-02-08', 3, '', 13, 1),
 (41, '2023-02-08 13:02:07.311259', '2', 'D15CNPM1 - Kỹ Thuật Lập Trình - 2023-02-08', 3, '', 13, 1),
-(42, '2023-02-08 13:02:07.313254', '1', 'D15CNPM2 - Kỹ Thuật Lập Trình - 2023-02-08', 3, '', 13, 1);
+(42, '2023-02-08 13:02:07.313254', '1', 'D15CNPM2 - Kỹ Thuật Lập Trình - 2023-02-08', 3, '', 13, 1),
+(43, '2023-03-19 11:18:16.686195', '1', 'admin', 2, '[{\"changed\": {\"fields\": [\"IsStudent\"]}}]', 7, 1),
+(44, '2023-03-19 12:11:27.810267', '2', '20810310272', 1, '[{\"added\": {}}]', 4, 1),
+(45, '2023-03-19 12:13:09.263395', '2', '20810310272', 1, '[{\"added\": {}}]', 7, 1),
+(46, '2023-03-19 12:59:15.754313', '2', '20810310272', 2, '[{\"changed\": {\"fields\": [\"First name\", \"Last name\", \"Email address\"]}}]', 4, 1),
+(47, '2023-03-24 19:56:49.456935', '1', 'admin', 2, '[{\"changed\": {\"fields\": [\"Avatar\"]}}]', 7, 1),
+(48, '2023-04-10 10:23:36.290372', '2', '20810310272', 2, '[{\"changed\": {\"fields\": [\"Student\"]}}]', 7, 1),
+(49, '2023-04-10 10:24:49.102292', '1', 'Chu Minh Nam - D15CNPM1', 2, '[{\"changed\": {\"fields\": [\"User\"]}}]', 10, 1);
 
 -- --------------------------------------------------------
 
@@ -333,7 +367,12 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (29, 'scores', '0002_alter_scores_classname_alter_scores_specialization', '2023-02-01 05:57:27.451519'),
 (30, 'sessions', '0001_initial', '2023-02-01 05:57:27.486973'),
 (31, 'scores', '0003_scores_sum', '2023-02-02 07:28:48.963463'),
-(32, 'attendance', '0001_initial', '2023-02-08 10:23:10.925673');
+(32, 'attendance', '0001_initial', '2023-02-08 10:23:10.925673'),
+(33, 'user', '0003_infouser_isstudent', '2023-03-19 11:17:56.887898'),
+(34, 'students', '0005_students_user', '2023-03-19 14:35:52.725711'),
+(35, 'user', '0004_infouser_student', '2023-04-10 10:23:07.797253'),
+(36, 'user', '0005_remove_infouser_student', '2023-04-10 10:25:12.826152'),
+(37, 'user', '0006_remove_infouser_isstudent', '2023-04-10 10:26:20.943494');
 
 -- --------------------------------------------------------
 
@@ -352,11 +391,17 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+('1qs4asnxsn9jfdldb33vsjpcu7afo3xu', '.eJxVjDsOwjAQBe_iGln-xRtT0nMGa71e4wBypDipEHeHSCmgfTPzXiLitta4dV7ilMVZaHH63RLSg9sO8h3bbZY0t3WZktwVedAur3Pm5-Vw_w4q9vqtvdXkRsjWFwWJwCArr2GwBlRmSnYspJw3xlkHpvgccHAUKKRUgInE-wPJZDfV:1pdscI:YMCYwC5lX0uaLPBrs_NGb-Tk8RimDMnef5c-ZiJwlEQ', '2023-04-02 12:58:30.542481'),
 ('422klpv721ditnatyvmcgbnvpv1y14oa', '.eJxVjDsOwjAQBe_iGln-xRtT0nMGa71e4wBypDipEHeHSCmgfTPzXiLitta4dV7ilMVZaHH63RLSg9sO8h3bbZY0t3WZktwVedAur3Pm5-Vw_w4q9vqtvdXkRsjWFwWJwCArr2GwBlRmSnYspJw3xlkHpvgccHAUKKRUgInE-wPJZDfV:1pOdXL:KR1GZnIrI38m6RZZQwQkeONEeGARZ_UNSwtMFrYfm_k', '2023-02-19 11:50:23.440026'),
+('4e6gw4eagiuzetmoawuv5ugxpz0v5k7g', 'e30:1pdr6d:S4opgCgpvMJH22MpS1GxiKTWfOvIUoR3-Q_41-9ds0I', '2023-04-02 11:21:43.411249'),
 ('67m0ulj2bo9ilce9u7j5ohr73i1cafck', '.eJxVjDsOwjAQBe_iGln-xRtT0nMGa71e4wBypDipEHeHSCmgfTPzXiLitta4dV7ilMVZaHH63RLSg9sO8h3bbZY0t3WZktwVedAur3Pm5-Vw_w4q9vqtvdXkRsjWFwWJwCArr2GwBlRmSnYspJw3xlkHpvgccHAUKKRUgInE-wPJZDfV:1pNeOJ:H27BDfTSJFiJbi4qRNSYQ_G6ans7Wjx5J6CsDlNdrI4', '2023-02-16 18:32:59.740154'),
+('aah3fsjb059vxeoeoo7qc7suaz59o4ta', '.eJxVjLEOgyAURf-FuSEICOrYvVM_wDwej0qrmAhOTf-9mDi06zn3njcbYS_TuGfaxujZwBp2-WUO8EXpEP4J6bFyXFPZouPHhJ8289vqab6e27_ABHmqb6Ma1J31ygRhHVoJJExjWyWt8IROdQGFNlJqpa0MxvfQauyxdy5YQqzRI5dgoVoDv8RUUcz3sntKhQ0B5kyfL8LWRKQ:1pfnU7:I0STcYBhoCzu5nphdLt2LWIq6KjhL2TWNfkMMd17oxY', '2023-04-07 19:53:59.933252'),
+('m7u2fz42cnstens2dts6f1cn7978wd64', 'e30:1plojP:qOodjtP8_XzXWvQ4z1LFmah06SdxYLZgBjuUcDIE7No', '2023-04-24 10:26:39.007613'),
 ('mz292jm9x77ek1vh51ujfrbxtco8nzhn', '.eJxVjDsOwjAQBe_iGln-xRtT0nMGa71e4wBypDipEHeHSCmgfTPzXiLitta4dV7ilMVZaHH63RLSg9sO8h3bbZY0t3WZktwVedAur3Pm5-Vw_w4q9vqtvdXkRsjWFwWJwCArr2GwBlRmSnYspJw3xlkHpvgccHAUKKRUgInE-wPJZDfV:1pNeJo:3XfkKBfOzUmHZZsBDqT22KU1PIgPGtZvuGRbQ7tW2rE', '2023-02-16 18:28:20.311000'),
 ('odnl6cgi01dvxhqkeasw5wvz3bij2sc8', '.eJxVjDsOwjAQBe_iGln-xRtT0nMGa71e4wBypDipEHeHSCmgfTPzXiLitta4dV7ilMVZaHH63RLSg9sO8h3bbZY0t3WZktwVedAur3Pm5-Vw_w4q9vqtvdXkRsjWFwWJwCArr2GwBlRmSnYspJw3xlkHpvgccHAUKKRUgInE-wPJZDfV:1pNeJo:3XfkKBfOzUmHZZsBDqT22KU1PIgPGtZvuGRbQ7tW2rE', '2023-02-16 18:28:20.401757'),
 ('szmdr9bnpttlxx7andqg7bps49x3dyad', '.eJxVjDsOwjAQBe_iGln-xRtT0nMGa71e4wBypDipEHeHSCmgfTPzXiLitta4dV7ilMVZaHH63RLSg9sO8h3bbZY0t3WZktwVedAur3Pm5-Vw_w4q9vqtvdXkRsjWFwWJwCArr2GwBlRmSnYspJw3xlkHpvgccHAUKKRUgInE-wPJZDfV:1pNeOJ:H27BDfTSJFiJbi4qRNSYQ_G6ans7Wjx5J6CsDlNdrI4', '2023-02-16 18:32:59.822926'),
+('v6t2ioqp7ww26kauzbpy1tbj18ktzd3g', '.eJxVjLsOwiAYRt-F2RAoFoqju5MP0PwXsPVCkwKT8d2lSQddv3O-8xYj1DKNNYd1nFmchBGH3w2BHiFtgO-QboukJZV1RrkpcqdZXhYOz_Pu_gUmyFN7IzliyxYRLesIWiGyjwje-UYC6R4GRZ3FwUVnyFk4kolWcSQDvW7RLZfgFVqtU4NWRiutfQNzvpbKIRVxKmsNny-alUYi:1pmCJ4:siXFuLgf517iy-PhnMOzxFimzu7jweyTrLSwdngXFtU', '2023-04-25 11:37:02.597930'),
+('x306oonl40b1cq7ks3qoxqxkwnxgszin', '.eJxVjLEOgyAURf-FuSEICOrYvVM_wDwej0qrmAhOTf-9mDi06zn3njcbYS_TuGfaxujZwBp2-WUO8EXpEP4J6bFyXFPZouPHhJ8289vqab6e27_ABHmqb6Ma1J31ygRhHVoJJExjWyWt8IROdQGFNlJqpa0MxvfQauyxdy5YQqzRI5dgoVoDv8RUUcz3sntKhQ0B5kyfL8LWRKQ:1plwEg:587ByovU1PeQkailXQWOciGptZrcnZt99nzZRbxPB5s', '2023-04-24 18:27:26.304826'),
 ('z4kfkx3k9ppje18xyl7rcnedgay9hen0', '.eJxVjDsOwjAQBe_iGln-xRtT0nMGa71e4wBypDipEHeHSCmgfTPzXiLitta4dV7ilMVZaHH63RLSg9sO8h3bbZY0t3WZktwVedAur3Pm5-Vw_w4q9vqtvdXkRsjWFwWJwCArr2GwBlRmSnYspJw3xlkHpvgccHAUKKRUgInE-wPJZDfV:1pPQYB:NaIaMvhpQoTbUSgE4C_wufkzS0R0u7pUUzyVq6Qt2Ek', '2023-02-21 16:10:31.224629');
 
 -- --------------------------------------------------------
@@ -385,7 +430,11 @@ INSERT INTO `scores_scores` (`id`, `score1`, `score2`, `score3`, `classname_id`,
 (1, 10, 9, 8, 2, 1, 5, 1, 8.399999999999999),
 (2, 5, 6, 7, 2, 1, 8, 1, 6.6),
 (3, 5, 5, 5, 2, 1, 6, 1, 5),
-(4, 10, 10, 5, 2, 1, 7, 1, 6.5);
+(4, 10, 10, 5, 2, 1, 7, 1, 6.5),
+(5, 7, 0, 5, 1, 1, 1, 1, 4.2),
+(6, 10, 10, 10, 1, 1, 1, 2, 10),
+(7, 5, 5, 5, 1, 1, 1, 3, 5),
+(8, 8, 9, 10, 1, 1, 16, 2, 9.6);
 
 -- --------------------------------------------------------
 
@@ -455,29 +504,32 @@ CREATE TABLE `students_students` (
   `specialization_id` bigint(20) NOT NULL,
   `joining_date` date NOT NULL,
   `classname_id` bigint(20) NOT NULL,
-  `status` tinyint(1) NOT NULL
+  `status` tinyint(1) NOT NULL,
+  `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `students_students`
 --
 
-INSERT INTO `students_students` (`id`, `fullname`, `birthday`, `gender`, `address`, `avatar`, `phone`, `specialization_id`, `joining_date`, `classname_id`, `status`) VALUES
-(1, 'Chu Minh Nam', '1995-05-06', 1, 'Xuân Phương, Hà Đông, Hà Nội', 'students/avatar.png', '035695628', 1, '2023-02-01', 1, 1),
-(2, 'Trần Thị Hương', '1999-03-02', 0, 'Phương Canh, Cầu Giấy, Hà Nội', 'students/anh-avatar-facebook-nu-toc-dai-buoc-no_SFASJlM.jpg', '0368523559', 1, '2023-02-01', 1, 1),
-(3, 'Đào Bá Hưng', '2001-05-09', 1, 'Hồng Đức, Thụy Phương, Hà Nội', 'students/anh-dai-dien-dep_yle5UY4.jpg', '0369862658', 1, '2023-02-01', 1, 1),
-(4, 'Chu Thành Nam', '2000-09-29', 1, 'Dịch Vọng Hậu, Cầu Giấy, Hà Nội', 'students/anh-avatar-supreme-dep-lam-dai-dien-facebook_gg8b2dt.jpg', '0986223586', 1, '2023-02-01', 1, 1),
-(5, 'Trần Ngọc Hà', '2002-11-14', 0, 'Xuân Đỉnh, Bắc Từ Liêm, Hà Nội', 'students/anh-avatar-facebook-nu-toc-dai-buoc-no_swYemHh.jpg', '0999888999', 1, '2023-02-01', 2, 1),
-(6, 'Trần Anh Tuấn', '2000-05-03', 1, 'Cổ Nhuế, Bắc Từ Liêm, Hà Nội', 'students/anh-dai-dien-dep_lTp7VKX.jpg', '0685956262', 1, '2023-02-01', 2, 1),
-(7, 'Trương Mai Anh', '2000-08-09', 0, 'Hồng Phước, Thụy Phương, Hà Nội', 'students/anh-avatar-facebook-nu-toc-dai-buoc-no_NQom41V.jpg', '0988555666', 1, '2023-02-01', 2, 1),
-(8, 'Đào Bá Hùng', '2000-06-03', 1, 'Xuân La, Tây Hồ, Hà Nội', 'students/anh-dai-dien-dep_EyPToFu.jpg', '0563256985', 1, '2023-02-01', 2, 1),
-(9, 'Trương Hướng Dương', '2000-03-29', 1, 'Tây Sơn, Thanh Xuân, Hà Nội', 'students/anh-avatar-supreme-dep-lam-dai-dien-facebook_0N1rPtS.jpg', '0354629565', 1, '2023-02-01', 3, 1),
-(10, 'Đào Yến Nhi', '2000-06-03', 0, 'Xuân Thủy, Cầu Giấy, Hà Nội', 'students/anh-avatar-facebook-nu-toc-dai-buoc-no_iBdTcnN.jpg', '0689623658', 1, '2023-02-01', 3, 1),
-(11, 'Trương Văn Định', '2000-06-10', 1, 'Trương Đình, Ba Đình, Hà Nội', 'students/anh-dai-dien-dep_aYdfNVq.jpg', '0598632658', 1, '2023-02-01', 3, 1),
-(12, 'Dương Ngọc Tú', '2000-06-14', 1, 'Thăng Long, Đông Anh, Hà Nội', 'students/anh-dai-dien-dep_XNezpt4.jpg', '0359862658', 1, '2023-02-01', 3, 1),
-(13, 'Lê Thu Thảo', '2000-03-28', 0, 'Tây Đô, Đan Phượng, Hà Nội', 'students/anh-avatar-facebook-nu-toc-dai-buoc-no_9guT3xK.jpg', '0398626589', 1, '2023-02-01', 6, 1),
-(14, 'Trần Đức Hoàng', '2000-06-05', 1, 'Ngọc Tảo, Phúc Thọ, Hà Nội', 'students/328714325_2219018465154114_7649671539834980274_n.jpg', '0658975324', 1, '2023-02-03', 5, 1),
-(15, 'Phùng Tiến Đạt', '2000-06-05', 1, 'Ngọc Hồi, Phúc Thọ, Hà Nội', 'students/anh-dai-dien-dep.jpg', '0989632658', 1, '2023-02-03', 5, 1);
+INSERT INTO `students_students` (`id`, `fullname`, `birthday`, `gender`, `address`, `avatar`, `phone`, `specialization_id`, `joining_date`, `classname_id`, `status`, `user_id`) VALUES
+(1, 'Chu Minh Nam', '1995-05-06', 1, 'Xuân Phương, Hà Đông, Hà Nội', 'students/avatar.png', '035695628', 1, '2023-02-01', 1, 1, 2),
+(2, 'Trần Thị Hương', '1999-03-02', 0, 'Phương Canh, Cầu Giấy, Hà Nội', 'students/anh-avatar-facebook-nu-toc-dai-buoc-no_SFASJlM.jpg', '0368523559', 1, '2023-02-01', 1, 1, NULL),
+(3, 'Đào Bá Hưng', '2001-05-09', 1, 'Hồng Đức, Thụy Phương, Hà Nội', 'students/anh-dai-dien-dep_yle5UY4.jpg', '0369862658', 1, '2023-02-01', 1, 1, NULL),
+(4, 'Chu Thành Nam', '2000-09-29', 1, 'Dịch Vọng Hậu, Cầu Giấy, Hà Nội', 'students/anh-avatar-supreme-dep-lam-dai-dien-facebook_gg8b2dt.jpg', '0986223586', 1, '2023-02-01', 1, 1, NULL),
+(5, 'Trần Ngọc Hà', '2002-11-14', 0, 'Xuân Đỉnh, Bắc Từ Liêm, Hà Nội', 'students/anh-avatar-facebook-nu-toc-dai-buoc-no_swYemHh.jpg', '0999888999', 1, '2023-02-01', 2, 1, NULL),
+(6, 'Trần Anh Tuấn', '2000-05-03', 1, 'Cổ Nhuế, Bắc Từ Liêm, Hà Nội', 'students/anh-dai-dien-dep_lTp7VKX.jpg', '0685956262', 1, '2023-02-01', 2, 1, NULL),
+(7, 'Trương Mai Anh', '2000-08-09', 0, 'Hồng Phước, Thụy Phương, Hà Nội', 'students/anh-avatar-facebook-nu-toc-dai-buoc-no_NQom41V.jpg', '0988555666', 1, '2023-02-01', 2, 1, NULL),
+(8, 'Đào Bá Hùng', '2000-06-03', 1, 'Xuân La, Tây Hồ, Hà Nội', 'students/anh-dai-dien-dep_EyPToFu.jpg', '0563256985', 1, '2023-02-01', 2, 1, NULL),
+(9, 'Trương Hướng Dương', '2000-03-29', 1, 'Tây Sơn, Thanh Xuân, Hà Nội', 'students/anh-avatar-supreme-dep-lam-dai-dien-facebook_0N1rPtS.jpg', '0354629565', 1, '2023-02-01', 3, 1, NULL),
+(10, 'Đào Yến Nhi', '2000-06-03', 0, 'Xuân Thủy, Cầu Giấy, Hà Nội', 'students/anh-avatar-facebook-nu-toc-dai-buoc-no_iBdTcnN.jpg', '0689623658', 1, '2023-02-01', 3, 1, NULL),
+(11, 'Trương Văn Định', '2000-06-10', 1, 'Trương Đình, Ba Đình, Hà Nội', 'students/anh-dai-dien-dep_aYdfNVq.jpg', '0598632658', 1, '2023-02-01', 3, 1, NULL),
+(12, 'Dương Ngọc Tú', '2000-06-14', 1, 'Thăng Long, Đông Anh, Hà Nội', 'students/anh-dai-dien-dep_XNezpt4.jpg', '0359862658', 1, '2023-02-01', 3, 1, NULL),
+(13, 'Lê Thu Thảo', '2000-03-28', 0, 'Tây Đô, Đan Phượng, Hà Nội', 'students/anh-avatar-facebook-nu-toc-dai-buoc-no_9guT3xK.jpg', '0398626589', 1, '2023-02-01', 6, 1, NULL),
+(14, 'Trần Đức Hoàng', '2000-06-05', 1, 'Ngọc Tảo, Phúc Thọ, Hà Nội', 'students/328714325_2219018465154114_7649671539834980274_n.jpg', '0658975324', 1, '2023-02-03', 5, 1, NULL),
+(15, 'Phùng Tiến Đạt', '2000-06-05', 1, 'Ngọc Hồi, Phúc Thọ, Hà Nội', 'students/anh-dai-dien-dep.jpg', '0989632658', 1, '2023-02-03', 5, 1, NULL),
+(16, 'Hoàng Công Chất', '2000-04-12', 1, 'Sô 01, Đường Lê Duẩn, Phường Hải Châu 1', 'students/graduated (1).png', '0999999999', 1, '2023-04-11', 1, 1, 3),
+(17, 'Nguyễn Văn Triết', '2000-05-25', 1, 'Sô 01, Đường Lê Duẩn, Phường Hải Châu 1', 'students/302432892_617225673102007_791750805034034521_n.jpg', '0999999999', 1, '2023-04-11', 2, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -529,7 +581,8 @@ CREATE TABLE `user_infouser` (
 --
 
 INSERT INTO `user_infouser` (`id`, `avatar`, `phone`, `birthday`, `address`, `specialization`, `user_id`) VALUES
-(1, 'uploads/avatar_uWbV5vI.png', '0379962045', '1988-02-07', 'Mĩ Đình, Nam Từ Liêm, Hà Nội', 'Công Nghệ Thông Tin', 1);
+(1, 'uploads/user.png', '0379962045', '1988-02-07', 'Mĩ Đình, Nam Từ Liêm, Hà Nội', 'Công Nghệ Thông Tin', 1),
+(2, 'uploads/anh-avatar-supreme-dep-lam-dai-dien-facebook.jpg', '0999888999', '2000-08-08', 'Xuân Đỉnh, Bắc Từ Liêm, Hà Nội', 'Công Nghệ Thông Tin', 2);
 
 --
 -- Indexes for dumped tables
@@ -647,7 +700,8 @@ ALTER TABLE `students_specialization`
 ALTER TABLE `students_students`
   ADD PRIMARY KEY (`id`),
   ADD KEY `students_students_classname_id_ad068c05_fk_students_classname_id` (`classname_id`),
-  ADD KEY `students_students_specialization_id_3dec1801` (`specialization_id`);
+  ADD KEY `students_students_specialization_id_3dec1801` (`specialization_id`),
+  ADD KEY `students_students_user_id_2c84f2a2_fk_auth_user_id` (`user_id`);
 
 --
 -- Indexes for table `subjects_subject`
@@ -673,7 +727,7 @@ ALTER TABLE `user_infouser`
 -- AUTO_INCREMENT for table `attendance_attendanceinfo`
 --
 ALTER TABLE `attendance_attendanceinfo`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `auth_group`
@@ -697,7 +751,7 @@ ALTER TABLE `auth_permission`
 -- AUTO_INCREMENT for table `auth_user`
 --
 ALTER TABLE `auth_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `auth_user_groups`
@@ -715,7 +769,7 @@ ALTER TABLE `auth_user_user_permissions`
 -- AUTO_INCREMENT for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `django_content_type`
@@ -727,13 +781,13 @@ ALTER TABLE `django_content_type`
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `scores_scores`
 --
 ALTER TABLE `scores_scores`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `students_classname`
@@ -751,7 +805,7 @@ ALTER TABLE `students_specialization`
 -- AUTO_INCREMENT for table `students_students`
 --
 ALTER TABLE `students_students`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `subjects_subject`
@@ -763,7 +817,7 @@ ALTER TABLE `subjects_subject`
 -- AUTO_INCREMENT for table `user_infouser`
 --
 ALTER TABLE `user_infouser`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -831,7 +885,8 @@ ALTER TABLE `students_classname`
 --
 ALTER TABLE `students_students`
   ADD CONSTRAINT `students_students_classname_id_ad068c05_fk_students_classname_id` FOREIGN KEY (`classname_id`) REFERENCES `students_classname` (`id`),
-  ADD CONSTRAINT `students_students_specialization_id_3dec1801_fk_students_` FOREIGN KEY (`specialization_id`) REFERENCES `students_specialization` (`id`);
+  ADD CONSTRAINT `students_students_specialization_id_3dec1801_fk_students_` FOREIGN KEY (`specialization_id`) REFERENCES `students_specialization` (`id`),
+  ADD CONSTRAINT `students_students_user_id_2c84f2a2_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
 
 --
 -- Constraints for table `subjects_subject`
